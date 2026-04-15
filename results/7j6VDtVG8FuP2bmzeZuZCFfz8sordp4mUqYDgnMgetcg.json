@@ -1,0 +1,807 @@
+{
+  "mint": "7j6VDtVG8FuP2bmzeZuZCFfz8sordp4mUqYDgnMgetcg",
+  "token_name": "curds",
+  "token_ticker": "CURD",
+  "pumpfun_url": "https://pump.fun/coin/7j6VDtVG8FuP2bmzeZuZCFfz8sordp4mUqYDgnMgetcg",
+  "created_at_unix": 1775766772,
+  "analysis_window_minutes": 15,
+  "total_transactions": 72,
+  "total_bot_transactions": 70,
+  "total_external_transactions": 2,
+  "primary_wallet": "spiderhuf1WwQRuypqCyjora73MqKuff45JFxaU5yC1",
+  "creator": {
+    "wallet": "BvC4PxpGpWbH9Ww9YGb7mVswzX97RKtdSmwuFEcxQkUp",
+    "fund_sol": 0.23,
+    "buy_amount_sol": 0.19865810899999997,
+    "buy_delay_after_create_ms": 1000
+  },
+  "initial_buyers": {
+    "count": 1,
+    "wallets": [
+      {
+        "pubkey": "GLPizReZiMhan1YV29cjNZShkgF1KE2YQ2wdaARGEnVh",
+        "fund_sol": 1.0,
+        "buy_amount_sol": 0.906964729,
+        "timestamp": 1775766774
+      }
+    ],
+    "min_buy_sol": 0.906964729,
+    "max_buy_sol": 0.906964729,
+    "total_sol": 0.906964729
+  },
+  "staggered_buyers": {
+    "count": 10,
+    "total_buys": 41,
+    "total_sells": 24,
+    "min_buy_sol": 0.05088999900000002,
+    "max_buy_sol": 0.15350597900000001,
+    "total_buy_sol": 4.424716067,
+    "total_sell_sol": 4.166916527,
+    "fund_per_wallet_sol": 0.5,
+    "delays_ms": [
+      2000,
+      7000,
+      5000,
+      4000,
+      4000,
+      4000,
+      5000,
+      3000,
+      9000,
+      4000,
+      5000,
+      5000,
+      5000,
+      7000,
+      3000,
+      5000,
+      3000,
+      3000,
+      5000,
+      5000,
+      6000,
+      2000,
+      6000,
+      5000,
+      2000,
+      5000,
+      5000,
+      7000,
+      7000,
+      5000,
+      3000,
+      4000,
+      6000,
+      3000,
+      5000,
+      3000,
+      6000,
+      2000,
+      5000,
+      4000,
+      5000,
+      5000,
+      3000,
+      5000,
+      3000,
+      6000,
+      6000,
+      3000,
+      3000,
+      6000,
+      3000,
+      6000,
+      5000,
+      5000,
+      6000
+    ],
+    "min_delay_ms": 2000,
+    "max_delay_ms": 9000,
+    "avg_delay_ms": 4618,
+    "buy_probability": 0.6307692307692307,
+    "sell_percentages": [
+      0.7396249537612596,
+      0.6242528940585106,
+      0.5530225373306604,
+      0.743179080948213,
+      0.7079502184282729,
+      0.5943030982459564,
+      0.585863687748109,
+      0.6722265029420806,
+      0.6502517408838753,
+      0.555677480872459,
+      0.6053073706794733,
+      0.6572911783638083,
+      0.556857373750419,
+      0.5297318191611881,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sell_pct_min": 0.5297318191611881,
+    "sell_pct_max": 1.0
+  },
+  "external_activity": {
+    "unique_wallets": 1,
+    "total_buys": 1,
+    "total_sells": 1,
+    "total_buy_sol": 0.0030990789999999976,
+    "total_sell_sol": 0.002853390000000001
+  },
+  "trade_timeline": [
+    {
+      "timestamp": 1775766772,
+      "signature": "3hv7bD7okCZLRhfeyU2g97JgcTZtbMbbUQy59BGqj1SezzZ96RBbrCUSBhabFhDvwy2heThrfeJ1DBPA6u4Cjjss",
+      "wallet": "BvC4PxpGpWbH9Ww9YGb7mVswzX97RKtdSmwuFEcxQkUp",
+      "wallet_role": "creator",
+      "action": "Create",
+      "sol_amount": 0.0072,
+      "token_amount": 0.0
+    },
+    {
+      "timestamp": 1775766773,
+      "signature": "3cw3ErJMUFhdQ2Rrv4d9NFXKouqVanjMd8DFCD9TEZfMaYDh6BvZMuvp7fUEs51p12JVSwtYidXK2g69UJ9iL6mK",
+      "wallet": "BvC4PxpGpWbH9Ww9YGb7mVswzX97RKtdSmwuFEcxQkUp",
+      "wallet_role": "creator",
+      "action": "Buy",
+      "sol_amount": 0.1987,
+      "token_amount": 6770556.9633
+    },
+    {
+      "timestamp": 1775766774,
+      "signature": "Tc392UKLaviZYiKpH869DsVuM5ib5DKiEmvbcVXF8t5Zk6PjLzN7XQXRnXZA4Ex3LL8dpJtzsqvw2oQRRmsqeHD",
+      "wallet": "GLPizReZiMhan1YV29cjNZShkgF1KE2YQ2wdaARGEnVh",
+      "wallet_role": "initial_buyer",
+      "action": "Buy",
+      "sol_amount": 0.907,
+      "token_amount": 30448504.7524
+    },
+    {
+      "timestamp": 1775766775,
+      "signature": "2JRdWhuJ47f1fN1PUUzRiMdTZYwgKcvF318b7LUrHqG7j4MJqgJV6h9LMGA7t2H1sJ1KM7VVpTM3erKGRvrUm2GF",
+      "wallet": "7c16MkLtKD7moCXxRd12eQTNzG8MVCjNz6DJdTA3wyAX",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.0904,
+      "token_amount": 2825189.4796
+    },
+    {
+      "timestamp": 1775766777,
+      "signature": "4CeMb853GyJT62HY9bYtXmuFsnS6eHYsjCjSHhg5qmicruMoyXJEGGa4hREuVEVdHvKJxbTiCFHACpRknvMLUngo",
+      "wallet": "2hw1P5xztULxJXEpusFe6jgoF5QbhKBmZY9MgvEJdEXn",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.122,
+      "token_amount": 3830776.7787
+    },
+    {
+      "timestamp": 1775766784,
+      "signature": "cErwUz6dmEeT2geQC1HtAXGTNejCSSohBxLWE47nizw2JjLYxf2sLGy85xvQhzh8RdQd3Y6T3qhf2i5jyCXtA1H",
+      "wallet": "G6H8MDUuKJJUn5Yjqefr5WvJTktBaQ6pXdWjqLk8xB7h",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.0614,
+      "token_amount": 1855581.0796
+    },
+    {
+      "timestamp": 1775766789,
+      "signature": "39J57oR6Ar2fyQyUWYzKD3Tww8x2kBs6RRD7RZF8329Q6tBT7NiLLqgikSFwPXmYFKjLXwJViJi2jpYmmkdDNMbu",
+      "wallet": "APKGoqyPqtLrjHuXPVbGQFDJQaTk1AwfWMg3Dffh11qG",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.125,
+      "token_amount": 3886409.1791
+    },
+    {
+      "timestamp": 1775766793,
+      "signature": "5SeHB3pWXnxFChGmXFJZ6ze1gMYmU57NZLhULqKUMc7mUdSTvaXzbZnHrU3v338ArkUy1DoyES43zen2TQdroPsU",
+      "wallet": "G6H8MDUuKJJUn5Yjqefr5WvJTktBaQ6pXdWjqLk8xB7h",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.055,
+      "token_amount": 1753897.5519
+    },
+    {
+      "timestamp": 1775766797,
+      "signature": "44KEofMmXjx5Qf8i1fSa4hqFQHq8EjxqPrNLNNQYL9Webdh4f7CnWHhrTBigk8tcMyYWbs1oaYyZgcZzd4oKTijC",
+      "wallet": "EdGWQukQzxEAWjR9mc1tW2u6U21wPXf4xot1xMEtnJ9o",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.0869,
+      "token_amount": 2635731.8887
+    },
+    {
+      "timestamp": 1775766801,
+      "signature": "5eUdc6pXxQrXCZgkpeoF3t2t6VhxmdziDQRDtqVWbbZbXwx2DkdNv5s8f6UNoEPdtVkffThpXCRsP5m5LQHEcsLd",
+      "wallet": "APKGoqyPqtLrjHuXPVbGQFDJQaTk1AwfWMg3Dffh11qG",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1313,
+      "token_amount": 4144208.2805
+    },
+    {
+      "timestamp": 1775766806,
+      "signature": "2SdHmzDri35ZyzoEMPXBycjLFbwryRdq7fmALWK4tW3cu9sfQo9s285BSgkuvCyJhtcKqpGGEgiPDN8T4dQpqbkp",
+      "wallet": "C4gLZvDLZzSwvh7EuB8QckMPCp1B211YLXAPx7BCgXso",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.0772,
+      "token_amount": 2298422.1437
+    },
+    {
+      "timestamp": 1775766809,
+      "signature": "3RjUEHzdGYQoFXFGkzUL8omsZbFk5gZxUUcVXMnVa9dDP3Wcr64bfuLWR8sDwrpo3PLiGvWtRFDzkZ6kN7UWwKs6",
+      "wallet": "7c16MkLtKD7moCXxRd12eQTNzG8MVCjNz6DJdTA3wyAX",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1221,
+      "token_amount": 3807655.2483
+    },
+    {
+      "timestamp": 1775766818,
+      "signature": "4d3vKA8LFZo9KLooaAP7P48ADjYZxi8rfN9LZPsF2vAkbsogA5twTcEK3YbbMEcFJpfNT3v7R3bY1ogysjc5kQZs",
+      "wallet": "HZPJScoRcVGYLULReVdBHuj6PxkvvdCPLH6uhLQGTurQ",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1535,
+      "token_amount": 4625529.6899
+    },
+    {
+      "timestamp": 1775766822,
+      "signature": "34LtK4kpLSYva83shjfvXrszaToR2tvtNzC12Cg7P5vbXbqmLbdLg7kLguwyqFnQick9H6HomgdDJifKoJuib68Z",
+      "wallet": "APKGoqyPqtLrjHuXPVbGQFDJQaTk1AwfWMg3Dffh11qG",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1119,
+      "token_amount": 3433627.489
+    },
+    {
+      "timestamp": 1775766827,
+      "signature": "2YSJCPwfdQv4tW71RbgtyuGrG87KqVALytcT4cj1oY7CKoz5jAu8iUjBpizF3SuCfDPVYxhh4dxRaYqxwnLKeKa6",
+      "wallet": "EdGWQukQzxEAWjR9mc1tW2u6U21wPXf4xot1xMEtnJ9o",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1099,
+      "token_amount": 3348428.003
+    },
+    {
+      "timestamp": 1775766832,
+      "signature": "5hHLA1ATQyYmFgBJN7H5KSrYPjfg2V6Ei75SaVZAg26wuMa29WxU4XwtVWpvMGxE3Ws4MZXC5jssW76wbVxkPWZs",
+      "wallet": "HWkBe6iG1GcHEGocpgvD7JdwJFFea7cpJcBdRv1H7sBa",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1103,
+      "token_amount": 3218651.8989
+    },
+    {
+      "timestamp": 1775766837,
+      "signature": "2y2ZRYCuqbA8kUB8NjPyjnsWkDABjTj1rDPU1owvepkfqfqif1omoyQjeEzTtrbW5MyYoHGgcyyPkjM4c9nY3LVb",
+      "wallet": "7c16MkLtKD7moCXxRd12eQTNzG8MVCjNz6DJdTA3wyAX",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.0509,
+      "token_amount": 1532688.1016
+    },
+    {
+      "timestamp": 1775766844,
+      "signature": "345Qa25uVrazHjz1sCgBqeXj5fYmWQVxMH4fu4wKFSLzLraP6QXnmR9KZw6jVG6dqH1MoAhUCdq1WqsBByUB6bNs",
+      "wallet": "2hw1P5xztULxJXEpusFe6jgoF5QbhKBmZY9MgvEJdEXn",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1262,
+      "token_amount": 3780750.2355
+    },
+    {
+      "timestamp": 1775766847,
+      "signature": "33j8b7hWS2j2i5LaeWTcwKJTmyjFqPRqZVUNMWak8rDS8AfHtNrTHGKDLcA1SSLSuxG4F9rbX31v98cBvyQuFgYx",
+      "wallet": "HZPJScoRcVGYLULReVdBHuj6PxkvvdCPLH6uhLQGTurQ",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.146,
+      "token_amount": 4339509.6533
+    },
+    {
+      "timestamp": 1775766852,
+      "signature": "5XtyCEtotUc1yUrXmmZa9XUaC8CwFRQVRtSBSXuAHgzm89wya9SmjRQhumzEUMHAnPJ4fdQuehEJSg7WAv4EHF5y",
+      "wallet": "7c16MkLtKD7moCXxRd12eQTNzG8MVCjNz6DJdTA3wyAX",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1348,
+      "token_amount": 3973179.3396
+    },
+    {
+      "timestamp": 1775766855,
+      "signature": "21NNCXFCshkrazFmHz5kgkqXGjG9VGT1RuNMsgqwiYqfPak2n6yt9XP8zVJoax3hkr2AM5L42xQs7F4jNUZLjH4V",
+      "wallet": "G6H8MDUuKJJUn5Yjqefr5WvJTktBaQ6pXdWjqLk8xB7h",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.117,
+      "token_amount": 3422513.8716
+    },
+    {
+      "timestamp": 1775766858,
+      "signature": "5r7E8QTFujqN1R5oHMQbyeQxHvMpAS1jiWsyd4M1JhrzVyU8entRW8MGCipVTTWc4KDBj2hwzKFZGdAERKXXHZkd",
+      "wallet": "HZPJScoRcVGYLULReVdBHuj6PxkvvdCPLH6uhLQGTurQ",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1033,
+      "token_amount": 3000950.801
+    },
+    {
+      "timestamp": 1775766863,
+      "signature": "4mtUphjwDhrJJ2By82dsGWsiXrvszWSc9EEky9spA4sx4vQS491X7EZuRuPYctt1b6SHmjvfMuerw9QJXnhYTQsz",
+      "wallet": "G6H8MDUuKJJUn5Yjqefr5WvJTktBaQ6pXdWjqLk8xB7h",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1481,
+      "token_amount": 4269843.5811
+    },
+    {
+      "timestamp": 1775766868,
+      "signature": "5t48RwwX7NV47UyYXMqWpvvdMVUVQqhNjvQ9wVL2N5wf7k6mbcTq4L61awM9ywTBcpQUaxC8eBKgsrJghqWHz1P6",
+      "wallet": "C4gLZvDLZzSwvh7EuB8QckMPCp1B211YLXAPx7BCgXso",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.0779,
+      "token_amount": 2229988.8978
+    },
+    {
+      "timestamp": 1775766874,
+      "signature": "2Pwpp94jgMjFi5tZJbVP7bq5AxrLe1z3vhxqDCAduL6GA7tuCUDKa4mBNyK7Dxvdpks45wXMVA7cF2qYSZr4VKSm",
+      "wallet": "HWkBe6iG1GcHEGocpgvD7JdwJFFea7cpJcBdRv1H7sBa",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1445,
+      "token_amount": 4112255.5902
+    },
+    {
+      "timestamp": 1775766876,
+      "signature": "5tYRhGJUSy4K647D9CrjeVvZ2oV27NgwMRA9N7FrEUB9uao6BB8i6cX7SPz9fZJzPAYKY6sPU6gDgwHFqWuYw6hY",
+      "wallet": "EdGWQukQzxEAWjR9mc1tW2u6U21wPXf4xot1xMEtnJ9o",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.1501,
+      "token_amount": 4426033.9832
+    },
+    {
+      "timestamp": 1775766882,
+      "signature": "4j12LCB8dPmstqhgGKxByEjxujNVYoTH6dtCoBdpdWL3guvrDYoJnn4h53riQVvEEDCRZ7gaxFcaxJNXj9PGq4Zk",
+      "wallet": "HWkBe6iG1GcHEGocpgvD7JdwJFFea7cpJcBdRv1H7sBa",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.1538,
+      "token_amount": 4576340.2162
+    },
+    {
+      "timestamp": 1775766887,
+      "signature": "65h2Ra6UW4e9AX5brKRjuDTsD8ttHa3gvN1frhdw8Nu6ynrJb4Aap7pK1dNpmnoCmzw5Jd7EbKid9A9K4NL8baEG",
+      "wallet": "AFXDDEmPGECVLphejQkhhk5YU94W23WPeCnekasvrJUz",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1179,
+      "token_amount": 3279226.1402
+    },
+    {
+      "timestamp": 1775766889,
+      "signature": "3XERmF1dTStAvpnSm8Wuki67xN8hYCooiyrqySPPPghMgbdJpEMnpW5nk2nvBPgeVQUMULk7spnXt4G2M1Q1TBUJ",
+      "wallet": "APKGoqyPqtLrjHuXPVbGQFDJQaTk1AwfWMg3Dffh11qG",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.0855,
+      "token_amount": 2444942.7434
+    },
+    {
+      "timestamp": 1775766894,
+      "signature": "3dX2VnECabP8FydDiSMditcjQD3rjNPwFYr4Sw6wbGCYdJigxDFHom1QmXGuVd3sPZS3JsnWF9SuAAudNcwF86ZZ",
+      "wallet": "HZPJScoRcVGYLULReVdBHuj6PxkvvdCPLH6uhLQGTurQ",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.055,
+      "token_amount": 1565245.4499
+    },
+    {
+      "timestamp": 1775766899,
+      "signature": "DaSEchYDDtqfWV1HWYReHFA2YMYvg7xwWqET8by3ucdxRhQb66zPEJUW1CfNfChHg5gadwdWNEn4FziPpzXz89T",
+      "wallet": "AFXDDEmPGECVLphejQkhhk5YU94W23WPeCnekasvrJUz",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.0614,
+      "token_amount": 1813485.9606
+    },
+    {
+      "timestamp": 1775766906,
+      "signature": "2cQFanP3AtMirpGftCJkLnKKVMPiojHF54YZH9iL22mSb1VG4LpZKww53DYwWNbFuaGqrMMuWj9LArfRgnfiJEC",
+      "wallet": "C4gLZvDLZzSwvh7EuB8QckMPCp1B211YLXAPx7BCgXso",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.0545,
+      "token_amount": 1551571.5736
+    },
+    {
+      "timestamp": 1775766913,
+      "signature": "4uVk4KFQFTQb89S7ajUaDAPvc1bj3nZZTLL6onewTPWZfoHxE3ykLMGucE4unncyVetbp7Hjoifg6bzbBX9tXbki",
+      "wallet": "EdGWQukQzxEAWjR9mc1tW2u6U21wPXf4xot1xMEtnJ9o",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.146,
+      "token_amount": 4137208.6256
+    },
+    {
+      "timestamp": 1775766918,
+      "signature": "Zja4Xzsydu8cvu5pDUMyx3L8abJDhM7kC6RZE1ZucHLec3ZisGuVQzjab4bmWu7fvti9rUpFpjAz4Pddi1obGBx",
+      "wallet": "APKGoqyPqtLrjHuXPVbGQFDJQaTk1AwfWMg3Dffh11qG",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.35,
+      "token_amount": 10337017.3257
+    },
+    {
+      "timestamp": 1775766921,
+      "signature": "BWuVrQ5LgqaDAosSsAaoAuQeKtjuAQR7vtgCuRKV6VoU2RY4gztx1UA7PKyZS5eurbKnesUN195syxcaDEaAAMh",
+      "wallet": "HWkBe6iG1GcHEGocpgvD7JdwJFFea7cpJcBdRv1H7sBa",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.0712,
+      "token_amount": 2048623.2355
+    },
+    {
+      "timestamp": 1775766925,
+      "signature": "wHojkUVcEPRERJdmctgoCh5JLodhjG1jqKisSBd7BjW5o9pSfrKVabujT8Z42L15DqkuHsDzuYtk2iK6xJg9vcG",
+      "wallet": "APKGoqyPqtLrjHuXPVbGQFDJQaTk1AwfWMg3Dffh11qG",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.0848,
+      "token_amount": 2528918.7911
+    },
+    {
+      "timestamp": 1775766931,
+      "signature": "LxFeJqUjxNFv4wzzn2KrJBMPpJebaG3bdRKXCC9hkBix4UXq823EXXfyKfW2g6sWKHaTdQptcfxjAqYWkf1WCE9",
+      "wallet": "HWkBe6iG1GcHEGocpgvD7JdwJFFea7cpJcBdRv1H7sBa",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.0952,
+      "token_amount": 2854551.0006
+    },
+    {
+      "timestamp": 1775766934,
+      "signature": "2ekd1wpC4YbR92WEVLDthFpxnHx9sns11ig8mt8uUJEZLtndJjVuQJ7QFoCAqH5SaLdRwyZRqgdV5vKLQh1EUrxY",
+      "wallet": "2hw1P5xztULxJXEpusFe6jgoF5QbhKBmZY9MgvEJdEXn",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.1477,
+      "token_amount": 4459317.286
+    },
+    {
+      "timestamp": 1775766939,
+      "signature": "FdLs4cfqAG5WCpTGdfN2UwkednrX6naPdiWDV5sX3pKiZSw2VZmUXt8CvpooCmRn5J6hBC77HFb7nhEKUggPBMQ",
+      "wallet": "EdGWQukQzxEAWjR9mc1tW2u6U21wPXf4xot1xMEtnJ9o",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1404,
+      "token_amount": 4095244.8869
+    },
+    {
+      "timestamp": 1775766942,
+      "signature": "635NZKrb5WhUhA2Q7G1or6v184B2mQyay16ipYeUr86p6fyb1TBw2C4fkZir3HqCCkA4p9fyr7H1XLV3KfEhZ4RF",
+      "wallet": "AFXDDEmPGECVLphejQkhhk5YU94W23WPeCnekasvrJUz",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.0327,
+      "token_amount": 985309.3952
+    },
+    {
+      "timestamp": 1775766948,
+      "signature": "5oi711ksHFsYtQqynVJ7wXq4ouckYBGP9YAx4UtKbLvnx9XBeAzBUNJg7rXmsUJ6VUDwK44u6YB8Zr8QUaZ6tZCA",
+      "wallet": "2hw1P5xztULxJXEpusFe6jgoF5QbhKBmZY9MgvEJdEXn",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.116,
+      "token_amount": 3364061.6084
+    },
+    {
+      "timestamp": 1775766950,
+      "signature": "2V2m6iJrVM19fWrXh5dHHWbMYMsL9JeLnUdxiiM7C1epvXgiTrSBtahePhKV4uGUSatY2h88EH7HFqBPS5bg2Cd3",
+      "wallet": "AFXDDEmPGECVLphejQkhhk5YU94W23WPeCnekasvrJUz",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1481,
+      "token_amount": 4260075.743
+    },
+    {
+      "timestamp": 1775766955,
+      "signature": "25Mq13gKmvm4c6SxfwVBZBiYkaQyYnAQCMGL7FMc2kq2mBGZ4Zv6aSaqfWk6L6dDReHj3kGk5mCugKxwEzC1LzLW",
+      "wallet": "APKGoqyPqtLrjHuXPVbGQFDJQaTk1AwfWMg3Dffh11qG",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.0228,
+      "token_amount": 678376.153
+    },
+    {
+      "timestamp": 1775766959,
+      "signature": "5mmWqXsfzjXuQiTHwP67rcZfjxf3gXpHnoKJVbAGvs8dBntswaNQuEdL7Vk3ZLRKs9WQ4goR5VcDDyiq5MXJvrYD",
+      "wallet": "C4gLZvDLZzSwvh7EuB8QckMPCp1B211YLXAPx7BCgXso",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.1133,
+      "token_amount": 3378509.4233
+    },
+    {
+      "timestamp": 1775766964,
+      "signature": "46Z7go3Uh4ANyspVZ8ihGz3cYvPtgf3QiQDYZN8neJKJZAvxyStJvCKDKhP3457AisS48FQUFKaEyP1RRzACX4LC",
+      "wallet": "G6H8MDUuKJJUn5Yjqefr5WvJTktBaQ6pXdWjqLk8xB7h",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.227,
+      "token_amount": 6841084.684
+    },
+    {
+      "timestamp": 1775766969,
+      "signature": "4kSTP5bjQPSGzbGTaLdiM2zc5YUSyu9vvr2WGnNUkJw78aYUSZ93XnsXKJ5rexmv3143Hcz12Qa7QXqjA9BDcmSx",
+      "wallet": "Fmv65dKwsBHvz4KL6vLXvDoCZmhHbQ5RiDjz2rxJJA82",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1006,
+      "token_amount": 2823811.6072
+    },
+    {
+      "timestamp": 1775766972,
+      "signature": "3pEB8WafzAkwcXW8YX7df2dRFjuUVB8zRJhjStk47Zw7FNgjREggJVfdPDk6dVsRinRUFS5MjdXhpUsZYUzDsakr",
+      "wallet": "G6H8MDUuKJJUn5Yjqefr5WvJTktBaQ6pXdWjqLk8xB7h",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.117,
+      "token_amount": 3396591.9959
+    },
+    {
+      "timestamp": 1775766977,
+      "signature": "5qngMVYvYpViqyQVZD1utmJuPzezCbnhBtJbFZUpF63FyTTuJupYrYGbFAJ3T33Z7KNcT3ynS8iUa8UabyKvYRAu",
+      "wallet": "Fmv65dKwsBHvz4KL6vLXvDoCZmhHbQ5RiDjz2rxJJA82",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.0618,
+      "token_amount": 1856066.4588
+    },
+    {
+      "timestamp": 1775766980,
+      "signature": "QuuaTWX5AT1ri9mi8fj9ypGnQBUhmS2MncTS636a3Yzy9MBtrXwM5W6zK3p1G8HmM5EZdCvj9xesbous84QmWuy",
+      "wallet": "C4gLZvDLZzSwvh7EuB8QckMPCp1B211YLXAPx7BCgXso",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.0499,
+      "token_amount": 1504335.2668
+    },
+    {
+      "timestamp": 1775766980,
+      "signature": "3vAEzz11Jvy9qKutryGoqZbcXRjndocThMq3skekRmwMHSXgNcZxVm9eQVc7qLoRLrqrAEpu9L71STkn95jnEBLs",
+      "wallet": "9dVFtGceuwmVxKEtUVtG4vs4EvhR965hcbPqq6HsDC4M",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.0031,
+      "token_amount": 28976.9513
+    },
+    {
+      "timestamp": 1775766986,
+      "signature": "2TqVdgbQdB6i66bf2tCvd3iFSb6R5EqvMLULLViUKCXaQiNPy1Yc5R9CxPoXEb8oAJDbnp5jepRG5xtsmjdSGvMe",
+      "wallet": "2hw1P5xztULxJXEpusFe6jgoF5QbhKBmZY9MgvEJdEXn",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1018,
+      "token_amount": 2954504.8421
+    },
+    {
+      "timestamp": 1775766992,
+      "signature": "zHBm1NjENsxVP3FCUHf26eYvzAHTM68MRPAGir5MPUJmtgPLYaLSZFdRiLUj4yKFJ9gt4b1oDR8L4amfqZSxJiq",
+      "wallet": "Fmv65dKwsBHvz4KL6vLXvDoCZmhHbQ5RiDjz2rxJJA82",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.0171,
+      "token_amount": 512645.398
+    },
+    {
+      "timestamp": 1775766995,
+      "signature": "2hVjFsjSuzwSQ2iLzkbsYA6XvepzjW8cmwHTgLBXbGXr4wcs9V11ni1sjtTwDWkZ5PsV2yqjbJ5rghhYCGa8bU3g",
+      "wallet": "AFXDDEmPGECVLphejQkhhk5YU94W23WPeCnekasvrJUz",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1084,
+      "token_amount": 3130243.5937
+    },
+    {
+      "timestamp": 1775766998,
+      "signature": "5uQW4jGD91fbq1W6vtXqaZ4WvCi3kHgu2oaMAZcKkdvxM4tMB8bFvbbxuS9gsfS6WQbd6DakHcsJLp9dxb6pgFJE",
+      "wallet": "2hw1P5xztULxJXEpusFe6jgoF5QbhKBmZY9MgvEJdEXn",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1425,
+      "token_amount": 4084402.4131
+    },
+    {
+      "timestamp": 1775767004,
+      "signature": "4hGdNdqPNLDBcF4DGKScAbFRbDGdADgh2BHRCjrHK8rfPEHfZZ11GV6Q5ZScb2Tp21EeNSvYdWmdjKw88CTqt1Vq",
+      "wallet": "AFXDDEmPGECVLphejQkhhk5YU94W23WPeCnekasvrJUz",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1282,
+      "token_amount": 3646697.989
+    },
+    {
+      "timestamp": 1775767007,
+      "signature": "58arj3XHQEfn3BcvwQT9nHnnYpc6wYe4oos1iv5VqcSQTbaKiuDkFm6UPCVoLCMgM6gqREXVoUX5YVC8xwXVrZsF",
+      "wallet": "7c16MkLtKD7moCXxRd12eQTNzG8MVCjNz6DJdTA3wyAX",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.058,
+      "token_amount": 1640676.8723
+    },
+    {
+      "timestamp": 1775767013,
+      "signature": "8tF9q8D4DzYZBDMgZxVu2yUPzmSX5MGUCC793gUDwfUeWbPBRiK5AJKZHKKkEGuhY7voEhLShv7iB5xSqhdeQrb",
+      "wallet": "Fmv65dKwsBHvz4KL6vLXvDoCZmhHbQ5RiDjz2rxJJA82",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.0768,
+      "token_amount": 2164593.5323
+    },
+    {
+      "timestamp": 1775767018,
+      "signature": "5LrZTeDAFjs1Ujk5vgzXZn5x12LeCUgvZZweCfZKAEFsZCz2f1FpGfJxAtByHK1HjwX2n1MPsiiknXr8VZ9fQ6Fw",
+      "wallet": "G6H8MDUuKJJUn5Yjqefr5WvJTktBaQ6pXdWjqLk8xB7h",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1303,
+      "token_amount": 3647596.8555
+    },
+    {
+      "timestamp": 1775767023,
+      "signature": "52Ex1e54Lvx9cgmwU5mCLY8jWqhDTn9ZMQjqXPj8bcDBX4PSh65B5MrJwPfuqEc7ZRqSJqvLaiym6L5e5Redqgxr",
+      "wallet": "EdGWQukQzxEAWjR9mc1tW2u6U21wPXf4xot1xMEtnJ9o",
+      "wallet_role": "staggered_buyer",
+      "action": "Buy",
+      "sol_amount": 0.1211,
+      "token_amount": 3366338.447
+    },
+    {
+      "timestamp": 1775767029,
+      "signature": "3hSaXYmMWmswkUKPcBAarnNXmQNMdku9FJ4uPkYRXz1HgV1PX28RV9HvQhv2SmjgJbAHT99yUsTp9ZpBEo7kxqKd",
+      "wallet": "AFXDDEmPGECVLphejQkhhk5YU94W23WPeCnekasvrJUz",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.3987,
+      "token_amount": 11517448.11
+    },
+    {
+      "timestamp": 1775767029,
+      "signature": "jcpJXLJreUi6Ao2XreKVA4DUWoBHrjabkmNo8ioMswNAwQqT4kjN4qWJZz4eYNToKJ5wN7oX5pMJmrVzbkgDx1X",
+      "wallet": "2hw1P5xztULxJXEpusFe6jgoF5QbhKBmZY9MgvEJdEXn",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.4569,
+      "token_amount": 13555178.5919
+    },
+    {
+      "timestamp": 1775767029,
+      "signature": "3UoWAYG2CRcAVSRbLwsTzpZPj3wzKUarkJ6Rfp9c3hvmymoZf3jEKuJj1sM4r1WXveQKdxXNU7kA5afLupXhFbca",
+      "wallet": "G6H8MDUuKJJUn5Yjqefr5WvJTktBaQ6pXdWjqLk8xB7h",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.3783,
+      "token_amount": 11504940.2517
+    },
+    {
+      "timestamp": 1775767029,
+      "signature": "3PDaQDb6Sekq7GtQN38k8tQjj4Uh8oTRyfifmt2if9UsZ39h1wsjd97xxLDWrP22U7JnnwQr2NGpuDW13TAK1xv3",
+      "wallet": "APKGoqyPqtLrjHuXPVbGQFDJQaTk1AwfWMg3Dffh11qG",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.0138,
+      "token_amount": 364875.4223
+    },
+    {
+      "timestamp": 1775767029,
+      "signature": "HpfGjNYfwKBM7zj4MFCX2YVeeLcmTwNanqr4HGcBMvLeHb3PW5T22nc2czfC59FJUKbphoEBXnyRtCJsBnja6Nd",
+      "wallet": "GLPizReZiMhan1YV29cjNZShkgF1KE2YQ2wdaARGEnVh",
+      "wallet_role": "initial_buyer",
+      "action": "Sell",
+      "sol_amount": 0.9562,
+      "token_amount": 30448504.7524
+    },
+    {
+      "timestamp": 1775767029,
+      "signature": "5bLsTLHSkXpsW8gNZCdQMu8LYkwJ6Z7PDWSE4pUaaS1tJs3AP4tXyPDHcB9gCbuXkMqYH3koAHofk1pg38gmds7g",
+      "wallet": "C4gLZvDLZzSwvh7EuB8QckMPCp1B211YLXAPx7BCgXso",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.0384,
+      "token_amount": 1197137.9249
+    },
+    {
+      "timestamp": 1775767029,
+      "signature": "AqBVRuhFaNcGTWfXgxzU2kcaNSvSmf68zJDqtzXPBk6Jf7WzTXUVzLE1HJ1g8dMySDV1p52G4vgaZkQovAumD6v",
+      "wallet": "EdGWQukQzxEAWjR9mc1tW2u6U21wPXf4xot1xMEtnJ9o",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.396,
+      "token_amount": 13156917.868
+    },
+    {
+      "timestamp": 1775767029,
+      "signature": "Wfj4EhtJU1oqrTio1pCMVs3M3hngkrMkinSm8rboRxfhpxenqRdMVZEE2wFVfzFfkNNKL1XozTW6YJyomH1iMuD",
+      "wallet": "7c16MkLtKD7moCXxRd12eQTNzG8MVCjNz6DJdTA3wyAX",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.4041,
+      "token_amount": 13779389.0414
+    },
+    {
+      "timestamp": 1775767029,
+      "signature": "8CYB8jsb5xaXWYJW6vMQ2eh6iS7GqjN3uvexVZiiFzhefYGKr9HKxRn8TzKv9VprXMoCqmRbRCb25dcioMJ2YJX",
+      "wallet": "Fmv65dKwsBHvz4KL6vLXvDoCZmhHbQ5RiDjz2rxJJA82",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.0773,
+      "token_amount": 2619693.2827
+    },
+    {
+      "timestamp": 1775767029,
+      "signature": "2benWgN8RDDRjgngYNuS8pMWXHAXhVQAoAcYB91xFfy7ZXK6DNynspHoHy8YM3xHsr3a5VCAoSbv4s9bSNGbjwaf",
+      "wallet": "BvC4PxpGpWbH9Ww9YGb7mVswzX97RKtdSmwuFEcxQkUp",
+      "wallet_role": "creator",
+      "action": "Sell",
+      "sol_amount": 0.1948,
+      "token_amount": 6770556.9633
+    },
+    {
+      "timestamp": 1775767029,
+      "signature": "3Am9zV78Hq6hQyndENasKyJSseaN6zZnVctoMaKXENpAvy8jNBQoYHXMn3wVjxpEgcKM8xc1T584wBxhNQnJ2R9z",
+      "wallet": "HZPJScoRcVGYLULReVdBHuj6PxkvvdCPLH6uhLQGTurQ",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.3799,
+      "token_amount": 13531235.5941
+    },
+    {
+      "timestamp": 1775767029,
+      "signature": "aR4TQifQJEiQ9DUhyR17kmKEhmqJq5wrVHgaHP4SYRvNUbkM3VFAbcqMvLKGed17RRDV8GLSXJcdz4oPKx1QNH3",
+      "wallet": "HWkBe6iG1GcHEGocpgvD7JdwJFFea7cpJcBdRv1H7sBa",
+      "wallet_role": "staggered_buyer",
+      "action": "Sell",
+      "sol_amount": 0.0557,
+      "token_amount": 1948639.5078
+    },
+    {
+      "timestamp": 1775767030,
+      "signature": "4sJevVrQNaFq8WKteyayB4cZULR5bb1TCcu1TUtjBhhAc1fVXokmnvevxfnPauMyGMPhkbS65ybTMihzTy1EKucj",
+      "wallet": "9dVFtGceuwmVxKEtUVtG4vs4EvhR965hcbPqq6HsDC4M",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0029,
+      "token_amount": 28976.9513
+    }
+  ],
+  "assumed_config": {
+    "strategy": 3,
+    "strategy_reasoning": "Initial buyers + staggered buyers with sells → Strategy 3",
+    "creator_fund_sol": 0.0313,
+    "creator_min_buy_amount": 0.1987,
+    "creator_max_buy_amount": 0.1987,
+    "initial_buyer_count": 1,
+    "initial_buyer_min_buy_amount": 0.907,
+    "initial_buyer_max_buy_amount": 0.907,
+    "buyer_count": 10,
+    "buyer_fund_sol": 0.5,
+    "buy_amount_min_sol": 0.0509,
+    "buy_amount_max_sol": 0.1535,
+    "trade_delay_min_ms": 2000,
+    "trade_delay_max_ms": 9000,
+    "buy_probability": 0.6308,
+    "sell_pct_min": 0.5297,
+    "sell_pct_max": 1.0
+  }
+}
