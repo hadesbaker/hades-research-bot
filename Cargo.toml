@@ -1,8 +1,8 @@
 [package]
 name = "hades-research-bot"
-version = "0.1.0"
+version = "0.0.1"
 edition = "2024"
-description = "Analyze pump.fun tokens to reverse-engineer bot configurations for hades-spider-bot"
+description = "Analyze pump.fun tokens to reverse-engineer bot configurations"
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }

@@ -135,6 +135,18 @@
     "total_buy_sol": 0.0030990789999999976,
     "total_sell_sol": 0.002853390000000001
   },
+  "profitability": {
+    "creator_spent_sol": 0.2059,
+    "creator_received_sol": 0.1948,
+    "creator_net_sol": -0.0111,
+    "bot_total_spent_sol": 5.5375,
+    "bot_total_received_sol": 5.3179,
+    "bot_net_sol": -0.2197,
+    "external_net_buy_sol": 0.0002,
+    "estimated_overhead_sol": 0.2197,
+    "profitable": false,
+    "verdict": "UNPROFITABLE — external buyers injected 0.0002 SOL net, but overhead was 0.2197 SOL (need 0.2194 more)"
+  },
   "trade_timeline": [
     {
       "timestamp": 1775766772,

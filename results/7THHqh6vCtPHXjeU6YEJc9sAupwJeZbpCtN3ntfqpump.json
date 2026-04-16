@@ -1,0 +1,731 @@
+{
+  "mint": "7THHqh6vCtPHXjeU6YEJc9sAupwJeZbpCtN3ntfqpump",
+  "token_name": "StfuLoLAfkNoobGangsta",
+  "token_ticker": "SLANG",
+  "pumpfun_url": "https://pump.fun/coin/7THHqh6vCtPHXjeU6YEJc9sAupwJeZbpCtN3ntfqpump",
+  "created_at_unix": 1776301047,
+  "analysis_window_minutes": 15,
+  "total_transactions": 76,
+  "total_bot_transactions": 3,
+  "total_external_transactions": 73,
+  "primary_wallet": "DMaaEv4kJfHBM8bEHnbs6gkEJtRxx1Jhr7U1VBi1wUSn",
+  "creator": {
+    "wallet": "Fyeo54jGxaVHYezBKBvBE1aEENjcDbzb8GBP1WDV5cKK",
+    "fund_sol": 3.01587105,
+    "buy_amount_sol": null,
+    "buy_delay_after_create_ms": null
+  },
+  "initial_buyers": {
+    "count": 0,
+    "wallets": [],
+    "min_buy_sol": null,
+    "max_buy_sol": null,
+    "total_sol": -0.0
+  },
+  "staggered_buyers": {
+    "count": 0,
+    "total_buys": 0,
+    "total_sells": 0,
+    "min_buy_sol": null,
+    "max_buy_sol": null,
+    "total_buy_sol": 0.0,
+    "total_sell_sol": 0.0,
+    "fund_per_wallet_sol": null,
+    "delays_ms": [],
+    "min_delay_ms": null,
+    "max_delay_ms": null,
+    "avg_delay_ms": null,
+    "buy_probability": null,
+    "sell_percentages": [],
+    "sell_pct_min": null,
+    "sell_pct_max": null
+  },
+  "external_activity": {
+    "unique_wallets": 25,
+    "total_buys": 24,
+    "total_sells": 45,
+    "total_buy_sol": 8.918867196000003,
+    "total_sell_sol": 7.613520880000011
+  },
+  "profitability": {
+    "creator_spent_sol": 3.0788,
+    "creator_received_sol": 3.8017,
+    "creator_net_sol": 0.7229,
+    "bot_total_spent_sol": 3.0788,
+    "bot_total_received_sol": 3.8017,
+    "bot_net_sol": 0.7229,
+    "external_net_buy_sol": 1.3053,
+    "estimated_overhead_sol": 0.0,
+    "profitable": true,
+    "verdict": "PROFITABLE — external buyers injected 1.3053 SOL net, bot profited 0.7229 SOL"
+  },
+  "trade_timeline": [
+    {
+      "timestamp": 1776301047,
+      "signature": "4wNK1t84MtqsaEJhFPDXcNF4Z6PNFynCRyZdfkEHeouR3A36sLdZFfSeoVzTEcjKrx1iUgroF2gyUYqzMhjuT4qh",
+      "wallet": "Fyeo54jGxaVHYezBKBvBE1aEENjcDbzb8GBP1WDV5cKK",
+      "wallet_role": "creator",
+      "action": "Create",
+      "sol_amount": 3.0788,
+      "token_amount": 97545454.5455
+    },
+    {
+      "timestamp": 1776301047,
+      "signature": "5vGjAegLTisSvZo4svQgcDWMsLhH4BjBBMk9tysPLWYzfcE4Nfsa8V6Xpu7b7CedTv976NLj2vinHiuA7FFiLGAP",
+      "wallet": "BAAyaiKLtB7Gi7d62eejUgnbFj8DQNNLUjBtdMQfPjnY",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 1.3323,
+      "token_amount": 36970580.44
+    },
+    {
+      "timestamp": 1776301047,
+      "signature": "2oYXp116wEoTmkQ3jWazefDhK6ExxGeM4xSwEkRoABz9fjEyo4S5PTwWTLNg23BEAEEjE6dZYiCjKUZssv58ddhL",
+      "wallet": "CxboEASXKbBvJYWHo1NhtbCo1cq88jdd25jV7pk53xci",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 1.6391,
+      "token_amount": 41826583.399
+    },
+    {
+      "timestamp": 1776301047,
+      "signature": "5DdyWAXiBiNnF9zezyga8ewKJnXJpNGGN6UyxSARMWy2o7sWpX3dMT6XNVpchgdwRHiWbJ7XebHySGGjvWhcMXSQ",
+      "wallet": "Hn9B5qcoHAQZg6YsjT6twgugzw1YTNF9qahC1n7UKBao",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.226,
+      "token_amount": 5440486.7537
+    },
+    {
+      "timestamp": 1776301047,
+      "signature": "2ACp8vPNxGW6v9qNUt1yB6K4DoiGUHdBynm1c5mwmr92wsZDD74FvU98wVKEtrvWCCb4CGSyTNLTPvJVf6gcyrok",
+      "wallet": "8aaRWuPGNP1qoBk7jE9ZRMaUhNnCn1cujjUkv6KoEzVL",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.2268,
+      "token_amount": 5440486.7537
+    },
+    {
+      "timestamp": 1776301047,
+      "signature": "2Q7RAwianv3VFbNQCb533daDHky2brnXHJW6FjLo7WkdwqjmY94Yo6eFKaZeZYU98MfPUogLEqazFSeGq7C7ADn5",
+      "wallet": "3d7DV3UiyiU7eTsc1Vmxw22RG8Kw8oQfbNAtEmE1CSMu",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.0467,
+      "token_amount": 1071928.0719
+    },
+    {
+      "timestamp": 1776301050,
+      "signature": "2uoZGkwv1zeYfgJGetKokZd4n23Evg4KUQNhcKZ6nG3UPHL1fWqo5883X2BV3GUohZwqgfdcyNnNjJ4SEKETCHUt",
+      "wallet": "Fyeo54jGxaVHYezBKBvBE1aEENjcDbzb8GBP1WDV5cKK",
+      "wallet_role": "creator",
+      "action": "Sell",
+      "sol_amount": 1.8565,
+      "token_amount": 48772727.2727
+    },
+    {
+      "timestamp": 1776301051,
+      "signature": "4ksWVJm1UCGjVPnHi5NpAcBQkdnx7kH9XnbM9yyBcmB5ksm11zgB6NYozMgv9t8KEn4YP439g89N5tuRS3mFDLK5",
+      "wallet": "BFMMWWjtoYU8T55XnMxtxiRqpBLnwS6wsw4LfkxHhULU",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.1555,
+      "token_amount": 4042897.0
+    },
+    {
+      "timestamp": 1776301054,
+      "signature": "2CZjYquZXWkmUWbP6smCEQqzSiJhuZ1m5J8gHUDXq1QYUeTcoQgiVsBqdZLPjw8vcturbtxQTFMg2aTiBwnfjdVC",
+      "wallet": "Fo98kYkAorGPPeiqkE1xZh9X4tUJd17ngJ7DzCG5RRxi",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.793,
+      "token_amount": 20264122.7324
+    },
+    {
+      "timestamp": 1776301054,
+      "signature": "2DeJcTWQamgXzh3nE7dKqHWVpEeCWsG9GN3k3dqts4Hdb3c3uEjEEtn6v2e1qaHXKXXASeHPrNFy5Ao3q27LYk9d",
+      "wallet": "Aa72g44Got9RaERTECMrtBuqpwBSbXcaSNYd8DZ24mV4",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.7181,
+      "token_amount": 17605140.0155
+    },
+    {
+      "timestamp": 1776301054,
+      "signature": "2nDqTR2Wy3RfbzbAvoEYtPMCBFhecDSGwhw4inHb8FJQVZinomv1qNqfWUUHoh51oseJ3vcV52EEKzbUKf4qE9oP",
+      "wallet": "BnV24BP61Xt9Werj3PS4AAnbJg2RfJ52gTGG9d1m9yTV",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.6716,
+      "token_amount": 15853540.8821
+    },
+    {
+      "timestamp": 1776301054,
+      "signature": "4UzUpUhAsn944fUh4VXdqhM8eYN6p5Qr1obt9KDACJNM6rXNCTtHbcP4nXcEPLw2ZLGXYuVsMVBPeNWQMPnJrYZK",
+      "wallet": "4Xp3v7dJhKEg4tMqSuF9k9E9LMZNakGGecsG7FqbPPzh",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.0529,
+      "token_amount": 1191162.85
+    },
+    {
+      "timestamp": 1776301054,
+      "signature": "5RdkJj4GtoSgxBbJRrdqCmW8MMzfgcHUVWWwHEsEU5RBgBcpsJZvEVD5rLwNPRXH5JhBmSCAw54swxs6gHujdTmh",
+      "wallet": "E7pRKD88ewUu6aPzvuWpgip3qgUfQgMyQoXsQHSs11G6",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.0836,
+      "token_amount": 1905860.56
+    },
+    {
+      "timestamp": 1776301055,
+      "signature": "4Ejb9Y1339peJsaY2YjdqnXXXrdaHon2sPoRAgqQ9GqAqVQ7QztrFF8s35sfBwVGck4SKZzfVRG7Q3DsctPHB9s6",
+      "wallet": "Fo98kYkAorGPPeiqkE1xZh9X4tUJd17ngJ7DzCG5RRxi",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.1894,
+      "token_amount": 4335679.5004
+    },
+    {
+      "timestamp": 1776301055,
+      "signature": "5Ph47RPkTb6TM6C2tdt5Kn9VTBPHh5GSV91qeGajWqZBujWodPBsn9yVJWu8zZG6UY6Nk5c7j4Sogja9656ndNY2",
+      "wallet": "BnV24BP61Xt9Werj3PS4AAnbJg2RfJ52gTGG9d1m9yTV",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.1672,
+      "token_amount": 3788675.4807
+    },
+    {
+      "timestamp": 1776301055,
+      "signature": "2w1a1TAYax5QkZPgRTX6c8HMmtXFL2ArQzaQSryiEEJ3tfwoqbbQiV6n6cjF7v63ft7Rf96AexViE1CAwsBe9PtP",
+      "wallet": "Aa72g44Got9RaERTECMrtBuqpwBSbXcaSNYd8DZ24mV4",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.1675,
+      "token_amount": 3761908.9048
+    },
+    {
+      "timestamp": 1776301056,
+      "signature": "37fN65txmBUbW3dT5dUbirK5pVeoRmMof38iGH5NqNN7y81WeWVrBxdo4wuSktHUcCwe2w82cdwg6wcvxvTqtcTz",
+      "wallet": "BFMMWWjtoYU8T55XnMxtxiRqpBLnwS6wsw4LfkxHhULU",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.1744,
+      "token_amount": 4042897.0
+    },
+    {
+      "timestamp": 1776301056,
+      "signature": "5mThVGdJh7ULkL6waU61pfhP3GYPoCwbwBynERYvuYh66bKFcxYJdfp7PMfEsNWJ8AZiWJwHi1mduuPx76yJ4ZpY",
+      "wallet": "SWthAibTvXE41Su13mT9QP4sg99hBpRdrJUbyYmPMh2",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.0531,
+      "token_amount": 1144581.2454
+    },
+    {
+      "timestamp": 1776301057,
+      "signature": "3MQCQggGxZjapHU5q9sSBGx1x1urKQYHJU7NAFeFycRUM4QaRfRw4bjmAgDceGrnaYK974vvba3RKB5vjLqEGUrv",
+      "wallet": "2nTowpRPEu1DeQJSjx6qszF52DBiNJawiKGRB5HAvQh7",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.0495,
+      "token_amount": 914399.2212
+    },
+    {
+      "timestamp": 1776301059,
+      "signature": "4mWGAXKP6JuCRdXTuFcQhpSEZZYWVYBzivgunr7UUfiRpmt9UnMw5txngc5SRLnjRNP81CSSvfL1h47g2ExoCpb6",
+      "wallet": "3d7DV3UiyiU7eTsc1Vmxw22RG8Kw8oQfbNAtEmE1CSMu",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0453,
+      "token_amount": 1071928.0719
+    },
+    {
+      "timestamp": 1776301060,
+      "signature": "57dNj3KzXZhA3Apek3dTkGbyD2Uy9oJeMybAMeCvCnZm7eqQENExbFtAjp19Frbj8CzdpVoSsGH3AZdQrTps3EQu",
+      "wallet": "Fyeo54jGxaVHYezBKBvBE1aEENjcDbzb8GBP1WDV5cKK",
+      "wallet_role": "creator",
+      "action": "Sell",
+      "sol_amount": 1.9452,
+      "token_amount": 48772727.2727
+    },
+    {
+      "timestamp": 1776301063,
+      "signature": "24xg2BXpvs3f3iDSBuD2kLaUg5JHYgGHFYcoDHnDm5s3DSEKVkGLsquG6paXrigWc3cZFTYLDZ6GAecgWxGWFFG3",
+      "wallet": "A9eRgcrqd1qMH6BtWXvX2DYD4hpitwg3Sjhzvq4z5cqM",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.4901,
+      "token_amount": 12155375.1392
+    },
+    {
+      "timestamp": 1776301063,
+      "signature": "2gYsqTkeqqBBxZMvQ6rEDE3bHL471DA5TUxWhosccyqvmjYC186vYVUnM6YsBZkoHk5peqA89bdw9ALEFSdSvL8v",
+      "wallet": "5dfLfzSKL78XVArRS349wVv4SmtD1SHfD62VpjcbrsHw",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.5161,
+      "token_amount": 12457625.4251
+    },
+    {
+      "timestamp": 1776301070,
+      "signature": "4gfs2QeR7jtCSJGEP3F89G6wWdnHH4QkLj2cY2wB2sGi8SGpMYXXAuNha2rAvNHCV2onHrBo49Ym8KPuPTPrzFg3",
+      "wallet": "BAAyaiKLtB7Gi7d62eejUgnbFj8DQNNLUjBtdMQfPjnY",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 1.4146,
+      "token_amount": 36970580.44
+    },
+    {
+      "timestamp": 1776301070,
+      "signature": "3s3WxneBRwhkSJRZW381wyN3TCFbaQura3gNvBEBtAJsgZr3B2HbE3EpSJWVXYkoddPMxJXWRTkkLNrXCfqtQGPc",
+      "wallet": "CxboEASXKbBvJYWHo1NhtbCo1cq88jdd25jV7pk53xci",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 1.4701,
+      "token_amount": 41826583.399
+    },
+    {
+      "timestamp": 1776301071,
+      "signature": "dxoBozH4D8qDbkrrQuMxFHFkNZSD2DsomzZAeZGGyeje63b3U7EDwfK6GHawLP7HD1zYryeG8gwLcywZ3WBPUVt",
+      "wallet": "8aaRWuPGNP1qoBk7jE9ZRMaUhNnCn1cujjUkv6KoEzVL",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.186,
+      "token_amount": 5440486.7537
+    },
+    {
+      "timestamp": 1776301071,
+      "signature": "2XSYuGPGbryP45WSJkJwZA8u8GWYQjk1oQKcw93XyjEP4vq7jV731KpcX4X7F8qyXRVaqGwCe5zyA4twVLPyxqp3",
+      "wallet": "Hn9B5qcoHAQZg6YsjT6twgugzw1YTNF9qahC1n7UKBao",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.1839,
+      "token_amount": 5440486.7537
+    },
+    {
+      "timestamp": 1776301071,
+      "signature": "37XSXujVyApfL9BJDGjhFHz26YTiv4i1Bwr7hjB4HEjCj6o1vDcAFX4wBGieqAzKCP9P5SV7U1aLzk8udsnkFQB3",
+      "wallet": "BBBByrLHua2oYFKviRze4N9n7ay7FcXqy2NzQXfXYEMm",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.5028,
+      "token_amount": 14462206.6727
+    },
+    {
+      "timestamp": 1776301072,
+      "signature": "viCuvF9zDheFhJactYUgAEUAUzXdzC6EMHh7Y88PAdzCRoFSH3zQ8rDb2SGcGFZoFznDSGrgsGyDJKpXdXwDrmj",
+      "wallet": "8gQGv878ydpjjLqWL9Z3mUeKifQzwEe7uaJxwzniNrAW",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.1234,
+      "token_amount": 3403490.0453
+    },
+    {
+      "timestamp": 1776301072,
+      "signature": "3pWXjACUJFDRpczT2x7cEDdCx5guZfnU12q4THUxk52N3Ypgahg5HZex1SVsGqXQUpNtWYZRSaPH6VoeUCKf1FPw",
+      "wallet": "A4HmqXTJCrHLgHv6vpB86287xWbpXVfF8h9E3nLv8M81",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.4021,
+      "token_amount": 11173268.6378
+    },
+    {
+      "timestamp": 1776301072,
+      "signature": "5ca1FhXsHBcGfHHwa2X26G6dJMrrepAHcTJ93uUPvfCNnxDmW31oWfkyCtwbhbjrKM3qT6M18as7nCbFTk2JEtFt",
+      "wallet": "2zX7uqvAj4hWKX2pARGutu8yEctjU7RYi2uxuwkdLQA8",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.2071,
+      "token_amount": 5624774.739
+    },
+    {
+      "timestamp": 1776301072,
+      "signature": "55UBTxLyHQb83JxZcHMazybvJukghJf3pftTA5ZC7j4kdV7JuLxXNqMJJqSxtoqHzp3aG3yMd4LSiF2Ax4az4Jjt",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.0021,
+      "token_amount": 288.1878
+    },
+    {
+      "timestamp": 1776301072,
+      "signature": "4vhaiZge5UCa4aXNToCrRLXny2mA18Xp14nJxoWsz93mr8wyA5Dr1rAAXfkfS4DoomxAyitCfaKK86HFHPnANCqV",
+      "wallet": "4Xp3v7dJhKEg4tMqSuF9k9E9LMZNakGGecsG7FqbPPzh",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0445,
+      "token_amount": 1191162.85
+    },
+    {
+      "timestamp": 1776301073,
+      "signature": "5wzzxaS3HLCfbhBwU92vjs1swSFFBwywSD4QjbxtGCwfQmwbq4KeKrtxBBzDKujaua7EQgxk3Qs8wRQVm2v7HvBG",
+      "wallet": "77cQ99WQ2FWQT19kgpN2a9CfgYSfDqpomNVGtyYUrpAY",
+      "wallet_role": "external",
+      "action": "Buy",
+      "sol_amount": 0.1031,
+      "token_amount": 2699955.4397
+    },
+    {
+      "timestamp": 1776301074,
+      "signature": "42RYJ7r4UiCrVRb54KK3zgUT2zwzf3Q91UtvY1BkDRANeq2kTeNtbJ7kA4C6ueS6VQmEqofXwaXuNCRfvGxX8LSS",
+      "wallet": "BnV24BP61Xt9Werj3PS4AAnbJg2RfJ52gTGG9d1m9yTV",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.6812,
+      "token_amount": 19642216.3628
+    },
+    {
+      "timestamp": 1776301074,
+      "signature": "3ayJb6PUbAL3kiNCTYW8HNcbfyeqXQeMFreJuvXksidt6KnHTMFG8Ke4ftqDX9CSH7NFHNiQKq5y8ZpaHhJn3ZN3",
+      "wallet": "Aa72g44Got9RaERTECMrtBuqpwBSbXcaSNYd8DZ24mV4",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.7101,
+      "token_amount": 21367048.9204
+    },
+    {
+      "timestamp": 1776301074,
+      "signature": "3wcJptyffGjT2uhEskedMtFjjtqKmRGWwuXNKyXWqQZgtWQorjV9d428ALG9ZzjAphKXxjPT3RByoNRGVo2NbevM",
+      "wallet": "Fo98kYkAorGPPeiqkE1xZh9X4tUJd17ngJ7DzCG5RRxi",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.7804,
+      "token_amount": 24599802.2328
+    },
+    {
+      "timestamp": 1776301074,
+      "signature": "CQmbHaiPGt9yodfBoErr6GDXWuQ9pUyj8CnVyPEZN6tHsTMgV7NDRSMkzwN8LEEVoksu3HkEaswnax6qRrfS5MG",
+      "wallet": "5dfLfzSKL78XVArRS349wVv4SmtD1SHfD62VpjcbrsHw",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.3798,
+      "token_amount": 12457625.4251
+    },
+    {
+      "timestamp": 1776301074,
+      "signature": "3JZ3nXxoHbHKBbNG1FXPWmotTvfQbxV4znDqTezdX23audb3DoECjApKoHMqztSZpYtrdVdyG2psY7rkYTt9BZ3j",
+      "wallet": "A9eRgcrqd1qMH6BtWXvX2DYD4hpitwg3Sjhzvq4z5cqM",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.3617,
+      "token_amount": 12155375.1392
+    },
+    {
+      "timestamp": 1776301074,
+      "signature": "53o3VsXiwTGjrbjg9AwGw63etk36EiKqsXbgy6Njoeu3xbKuJsKKeFt1jAKRUJ9Qu5zy666iLfRN3996pnvxpitK",
+      "wallet": "A4HmqXTJCrHLgHv6vpB86287xWbpXVfF8h9E3nLv8M81",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.3301,
+      "token_amount": 11173268.6378
+    },
+    {
+      "timestamp": 1776301074,
+      "signature": "3goYLeU3nuK9s8YEzpQWEVQLrZdu8mpwnZ93kQY7i1V4bjdgti22Cz28AQKrhTHDXz8m5DoVgRg2xP8cX1U6Jwer",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301074,
+      "signature": "2o9zYNKoUQqc8uZ5M17BEXB7YeVeeF9PHzg2ZGqgpQL7Dawp4d2pd2N5PBBwwvCLJq45xhQYNFghpi4AnHnLeVxD",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301074,
+      "signature": "4pieQbguuWj7sZ3maEussnmbQs9VBcqmdhJzQWBkweg3zEYv6jpgcARbfxM9fpkgaWvFXVFJ3zbzzyF7KaZobytm",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301076,
+      "signature": "2utLok81vdRaw6jkMdsJcf9i2gMBiyPj2AykKUHHZMapEDhYvadAC2YjZjgx2T72JNjTggq96GQ63BwSdU8abvzf",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301076,
+      "signature": "4hX3vf7yRZdChTQ5VZFy4zv1Ba37SEri7jQH1NFvr4KDNKfih9HmRgXb8RRFgaMX1B1xcS7VGEzKXxZ8YNLLd4UJ",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301076,
+      "signature": "67NMw22KjBMCuTDkvYbFhkCvn56R8H4td3qaJZXtcCQEDphNVXJLpX4Yoo8uA632SWtdF3ZAoQ6tTymjL1peVzZr",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301077,
+      "signature": "4NSHQzzQYGPXaYGY88dyTvTCzkgqEpSYT14iAuLWtUUDgqzzNuvWfwPkdBea6WyXXsSzdxTzSSmBH6yo2MzxK8MX",
+      "wallet": "E7pRKD88ewUu6aPzvuWpgip3qgUfQgMyQoXsQHSs11G6",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0576,
+      "token_amount": 1905860.56
+    },
+    {
+      "timestamp": 1776301077,
+      "signature": "c7ijEHJ7VqAXGZkSkiTm5AmKPu3MSJx1urrbGhMfq882qS4pEqagHT8G2nDDDb74pmpyrzCchRp2ZfsLFEst2S7",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301077,
+      "signature": "2CyUfFS9ESpcpNqt2QEZBFRGiRp2qbsRab2q6TG9w1Mg5Yzc8wNBwZhCDCLmmnxvJzvrPdJv6zoDcKsDzJHjNSye",
+      "wallet": "BBBByrLHua2oYFKviRze4N9n7ay7FcXqy2NzQXfXYEMm",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.4174,
+      "token_amount": 14462206.6727
+    },
+    {
+      "timestamp": 1776301078,
+      "signature": "5514xB5Ec48jrWucfDjmBWdEC4GGDpN2PKS84fviwV7EUCnbkx2rUA3GFidz4pzKJCBXyhzWHXvWSk1unmFRo2kp",
+      "wallet": "8gQGv878ydpjjLqWL9Z3mUeKifQzwEe7uaJxwzniNrAW",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0959,
+      "token_amount": 3403490.0453
+    },
+    {
+      "timestamp": 1776301078,
+      "signature": "65ozUQXkav6gbq6quPz9mhbUV9D6iHBH2ZoTmxGM1uHKU72PWfC4ThTF49nT2Jhdt7vEBZ7YNECW5HWSUhR3hs5y",
+      "wallet": "2zX7uqvAj4hWKX2pARGutu8yEctjU7RYi2uxuwkdLQA8",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.1573,
+      "token_amount": 5624774.739
+    },
+    {
+      "timestamp": 1776301078,
+      "signature": "4cvAWeXjGppRKenyWqJXDDfKa8K24ovtwF4PCfFUi7Y2aesSFfAf9acBf5oQQMAb92F74GRNxRVxDtT49mAHwa6n",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301079,
+      "signature": "Qo1tfk9RdtcjiFhHM9AQwE32ghCwNr8xfbchqQm28ecyziUrn8yx1zAp1WFhWe5fLMWGBzSP4J7WKwR54Tmoawu",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301079,
+      "signature": "5BsDCwvj952BQcdBJQJsqWy3j5dS15bvMKyMu3Eyz6Qbs47HhauopkTukLx1xsvsozGhtYBvofheBGzrTANySJpr",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301079,
+      "signature": "48ymmoqP8Uhkge6n3bwFLTL4pvPM3uEuVeJeSMm8J2HckgEHQYbf7GNLxy1fGSrDt2uyBCCu9DrQmmzy3UN5yw7q",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301079,
+      "signature": "2fx2ghcoc41xEQR3aTM8YjDgHPqysubVTsGoKgrPZESMsM5YCdUowvZzRRpaj3WUHEgCyE8z8DuqGZv6BJs1gn5z",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301079,
+      "signature": "bZzSy9M59XweBHcX6aoDurz7djRrUouTXrpytD3gNLt1KVtVoEQLigJdw94wPACwskZDxBWxQrkDZhgbzyTfMwk",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301079,
+      "signature": "5JekR8TVSCTPjGPvzKnwMLmH1JNTDB31dMcFDWEooYd3poBK38oQLusmi8MhFkhDRXmNR2ZCD7zGcPnvNJtWpisf",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301082,
+      "signature": "5vsJGoL3QXc834w1fc1qvvrufdUF1M2rPhC5htHg15Mk7qUE3unFNVG1Nwz2GyBLLLxnyTgCqLL495duvgGkjqsJ",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301082,
+      "signature": "4LK9xVgWtyy6XfAr2nGgJifKp11jTF9AxznQ5ZxYeutw7GDjZqhnbdXxHV4SwDLCKX6UgMdJJrbatj6SiTQL8vJM",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5272
+    },
+    {
+      "timestamp": 1776301082,
+      "signature": "3SMKiYc1jzq6mTrNmK5LAfBZassWuQBAiLdVS3RNahNFmq7PjNsV3BZkpvhRRKtSzRrigBGDGdUuW2qFzNzfeDDJ",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301082,
+      "signature": "5Qe3b7qEE3q6iPqx8xxpsmt4B3LaTMD1WTrDGMngc3xiiHK71m1pk1copLB5U4K2WAd5rN2FWmKjAyHBM3cANgQe",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301082,
+      "signature": "3oo3ZzBdxwyUZcftsxx8eKPTXaHbfRyhgHb2Soyazax7W5T74RMuy1MrmFjmAukGXhYrBo3XaMjnvYe5iTF1y2iM",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301082,
+      "signature": "3631kdZpL7Bk7oqmkZYpNaQ5w361HzpGBuzTdfN7NxkgX7EB2GidAhRHXXij5Wnk5D4Biz4GJQWNWRGsUtspSZPp",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301082,
+      "signature": "wioq5HUPaJK3PYSVrHE79Kuh9p4hXx83WEMx6PU7K7Fcaxp89v3XYtvrCEChgTmHsYPm8QTAYuo3D6Gp7T6DSmU",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301087,
+      "signature": "4CKX8WSL7nxfuVJbzk5oLWfkCeekqXG73Q216czg7uAAXsVYMcxMa5prESaWmHmXwpgjeRdp2Qiu1qU9tg6R4wK1",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301087,
+      "signature": "5nPtha2RWEAfSGHY25f129PdK4eLHK1ADxAAxC52jDr8yk7F6GTbJjdcfex4s9K833BnTYXWgCzKcfmjj56pjrea",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301087,
+      "signature": "25vTvBePwgG9Pmv8Bbkg7SyaVMpVp8SNEEbvBVQtijCsBKY917ebVnMCbXcaFpjQTYLVsmjE6Raz1Y1oZuzcXtLB",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    },
+    {
+      "timestamp": 1776301121,
+      "signature": "3Rz9nUJZkYtwcwfNWcJEPMvyMmcFR1r7sqJ1zyt7XE2xj5yM3V8nP3gxSc42UJNCstjg1DuaBMAsyjiCgJs1CwWb",
+      "wallet": "2nTowpRPEu1DeQJSjx6qszF52DBiNJawiKGRB5HAvQh7",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0182,
+      "token_amount": 914399.2212
+    },
+    {
+      "timestamp": 1776301134,
+      "signature": "3pFjRK1BBkZkvgSNk7rFgSUZ8vDffbEqcVLAzL5Dz9c9ExvFSpCX7kDsCBVsoZDhj4DGK4yCbx4cUzUPsibxCK9A",
+      "wallet": "77cQ99WQ2FWQT19kgpN2a9CfgYSfDqpomNVGtyYUrpAY",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0734,
+      "token_amount": 2672955.8853
+    },
+    {
+      "timestamp": 1776301138,
+      "signature": "2V435RbFX3acUyCbTFETcYqHXfcAtuiXC9W6dc3GDgdi2iLBrtMUtyNqYjwdVV8tDscxo1qHb3uafoeQBQSSVbkw",
+      "wallet": "SWthAibTvXE41Su13mT9QP4sg99hBpRdrJUbyYmPMh2",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0317,
+      "token_amount": 1144581.2454
+    },
+    {
+      "timestamp": 1776301249,
+      "signature": "3FQWxKCYsp3bVEwTtaX1eZhECmfMmPbgkv6moBisNvLdhZTXxGyxCnxV39gTwVvu3WbTbnternA4jH5iSjNGtHpN",
+      "wallet": "A33KqHyTF1Csfj4SE76koNE5pnw2BY97fbTv1kUaB9ck",
+      "wallet_role": "external",
+      "action": "Sell",
+      "sol_amount": 0.0,
+      "token_amount": 11.5275
+    }
+  ],
+  "assumed_config": {
+    "strategy": 0,
+    "strategy_reasoning": "Could not determine strategy — no clear bot pattern",
+    "creator_fund_sol": 3.0159,
+    "creator_min_buy_amount": null,
+    "creator_max_buy_amount": null,
+    "initial_buyer_count": 0,
+    "initial_buyer_min_buy_amount": null,
+    "initial_buyer_max_buy_amount": null,
+    "buyer_count": 0,
+    "buyer_fund_sol": null,
+    "buy_amount_min_sol": null,
+    "buy_amount_max_sol": null,
+    "trade_delay_min_ms": null,
+    "trade_delay_max_ms": null,
+    "buy_probability": null,
+    "sell_pct_min": null,
+    "sell_pct_max": null
+  }
+}

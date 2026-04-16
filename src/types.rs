@@ -139,8 +139,28 @@ pub struct TokenAnalysis {
     pub initial_buyers: InitialBuyerInfo,
     pub staggered_buyers: StaggeredBuyerInfo,
     pub external_activity: ExternalInfo,
+    pub profitability: Profitability,
     pub trade_timeline: Vec<TimelineEntry>,
     pub assumed_config: AssumedConfig,
+}
+
+#[derive(Debug, Serialize)]
+pub struct Profitability {
+    /// Creator spent (create + buy) vs received (sells)
+    pub creator_spent_sol: f64,
+    pub creator_received_sol: f64,
+    pub creator_net_sol: f64,
+    /// All bot wallets combined (creator + initial + staggered)
+    pub bot_total_spent_sol: f64,
+    pub bot_total_received_sol: f64,
+    pub bot_net_sol: f64,
+    /// External buyers injected this much SOL (buys minus sells)
+    pub external_net_buy_sol: f64,
+    /// Estimated overhead (fees, slippage, rent) = bot_spent - bot_received when no externals
+    pub estimated_overhead_sol: f64,
+    /// Did external capital exceed the overhead?
+    pub profitable: bool,
+    pub verdict: String,
 }
 
 #[derive(Debug, Serialize)]

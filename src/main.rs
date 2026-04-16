@@ -101,6 +101,19 @@ async fn run() -> anyhow::Result<()> {
                     analysis.external_activity.total_buy_sol,
                 );
                 println!("├─────────────────────────────────────────────────────────────");
+                let p = &analysis.profitability;
+                println!("│ PROFITABILITY");
+                println!("│");
+                println!("│ Creator:    spent {:.4}  recv {:.4}  net {:+.4} SOL",
+                    p.creator_spent_sol, p.creator_received_sol, p.creator_net_sol);
+                println!("│ All bots:   spent {:.4}  recv {:.4}  net {:+.4} SOL",
+                    p.bot_total_spent_sol, p.bot_total_received_sol, p.bot_net_sol);
+                println!("│ External:   net buy {:+.4} SOL", p.external_net_buy_sol);
+                println!("│ Overhead:   {:.4} SOL", p.estimated_overhead_sol);
+                println!("│");
+                println!("│ {}", if p.profitable { "★" } else { "✗" });
+                println!("│ {}", p.verdict);
+                println!("├─────────────────────────────────────────────────────────────");
                 println!("│ ASSUMED CONFIG (Strategy {})", analysis.assumed_config.strategy);
                 println!("│ {}", analysis.assumed_config.strategy_reasoning);
                 println!("│");
