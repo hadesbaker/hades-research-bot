@@ -22,7 +22,7 @@ impl SolanaRpc {
         }
     }
 
-    async fn rpc_call<T: serde::de::DeserializeOwned>(
+    pub async fn rpc_call<T: serde::de::DeserializeOwned>(
         &self,
         method: &str,
         params: serde_json::Value,

@@ -104,10 +104,10 @@ pub async fn analyze_token(rpc: &SolanaRpc, mint: &str) -> anyhow::Result<TokenA
             "Identified primary wallet"
         );
     } else {
-        warn!("Could not identify primary wallet — all wallets will be classified by timing heuristics");
+        warn!("Could not identify primary wallet");
     }
 
-    // 7. Classify trading wallets (bot vs external)
+    // 7. Classify trading wallets (bot vs external) by wallet freshness
     let unique_wallets: Vec<String> = trades
         .iter()
         .map(|t| t.wallet.clone())
@@ -121,34 +121,12 @@ pub async fn analyze_token(rpc: &SolanaRpc, mint: &str) -> anyhow::Result<TokenA
         "Classifying trading wallets..."
     );
 
-    let mut bot_wallet_funds: HashMap<String, Option<f64>> = HashMap::new();
-
-    if let Some(ref primary) = primary_wallet {
-        for wallet in &unique_wallets {
-            let fund = check_wallet_funding(rpc, wallet, primary).await;
-            if let Some(f) = fund {
-                debug!(wallet = %wallet, fund = format!("{:.4}", f), "Bot wallet (funded by primary)");
-                bot_wallet_funds.insert(wallet.clone(), Some(f));
-            }
-            tokio::time::sleep(std::time::Duration::from_millis(50)).await;
-        }
-    } else {
-        // Fallback: use timing heuristics to guess bot wallets
-        // Wallets that trade within the first 60 seconds are likely bots
-        let early_cutoff = creation_time + 60;
-        for wallet in &unique_wallets {
-            let first_trade_time = trades
-                .iter()
-                .filter(|t| t.wallet == *wallet)
-                .map(|t| t.timestamp)
-                .min();
-            if let Some(t) = first_trade_time {
-                if t <= early_cutoff {
-                    bot_wallet_funds.insert(wallet.clone(), None);
-                }
-            }
-        }
-    }
+    let bot_wallet_funds = classify_wallets_by_freshness(
+        rpc,
+        &unique_wallets,
+        creation_time,
+    )
+    .await;
 
     let bot_wallets: HashSet<String> = bot_wallet_funds.keys().cloned().collect();
     let external_wallets: Vec<String> = unique_wallets
@@ -306,13 +284,14 @@ fn parse_transaction(
 // ─── Primary Wallet Detection ───────────────────────────────────────────────
 
 /// Look at the creator wallet's transaction history to find who funded it.
+/// Uses raw SOL balance changes so it works regardless of how SOL was transferred
+/// (system transfer, Jito bundle, program-level transfer, etc.).
 /// Returns (primary_wallet_pubkey, funding_amount_sol).
 async fn find_primary_wallet(
     rpc: &SolanaRpc,
     creator: &str,
 ) -> (Option<String>, Option<f64>) {
-    // Get creator's recent signatures (will include funding, create, buy, sell, sweep)
-    let sigs = match rpc.get_signatures(creator, 30).await {
+    let sigs = match rpc.get_signatures(creator, 50).await {
         Ok(s) => s,
         Err(e) => {
             warn!(%e, "Failed to get creator signatures");
@@ -320,7 +299,7 @@ async fn find_primary_wallet(
         }
     };
 
-    // Iterate from oldest (last in array) looking for a SOL transfer INTO the creator
+    // Iterate from oldest to newest, looking for a tx where creator received SOL
     for sig_info in sigs.iter().rev() {
         if sig_info.err.is_some() {
             continue;
@@ -333,8 +312,8 @@ async fn find_primary_wallet(
             Err(_) => continue,
         };
 
-        if let Some((sender, amount)) = find_sol_transfer_to(&tx, creator) {
-            if sender != creator {
+        if let Some((sender, amount)) = find_sol_inflow(&tx, creator) {
+            if sender != creator && amount > 0.001 {
                 return (Some(sender), Some(amount));
             }
         }
@@ -343,90 +322,162 @@ async fn find_primary_wallet(
     (None, None)
 }
 
-/// Check if a wallet was funded by the primary wallet. Returns the funding amount if so.
-async fn check_wallet_funding(
-    rpc: &SolanaRpc,
-    wallet: &str,
-    primary: &str,
-) -> Option<f64> {
-    let sigs = rpc.get_signatures(wallet, 30).await.ok()?;
+/// Detect a SOL inflow to a wallet using raw balance changes.
+/// Works for system transfers, Jito bundles, program-level transfers, etc.
+/// Returns (likely_sender, amount_sol) where likely_sender is the account
+/// whose SOL balance decreased the most in the same transaction.
+fn find_sol_inflow(tx: &TransactionResult, to: &str) -> Option<(String, f64)> {
+    let meta = tx.meta.as_ref()?;
+    let account_keys = extract_account_keys(&tx.transaction);
 
-    // Check oldest signatures for a SOL transfer from the primary wallet
-    for sig_info in sigs.iter().rev() {
-        if sig_info.err.is_some() {
+    // Find the target wallet's account index
+    let to_idx = account_keys.iter().position(|k| k.pubkey == to)?;
+
+    let to_pre = *meta.pre_balances.get(to_idx)? as f64;
+    let to_post = *meta.post_balances.get(to_idx)? as f64;
+    let inflow = to_post - to_pre;
+
+    // Must have received a meaningful amount of SOL
+    if inflow < 1_000_000.0 {
+        // < 0.001 SOL
+        return None;
+    }
+
+    // Find the account whose balance decreased the most (likely the sender)
+    let mut best_sender: Option<(String, f64)> = None;
+    for (i, key) in account_keys.iter().enumerate() {
+        if i == to_idx {
             continue;
         }
+        let pre = *meta.pre_balances.get(i).unwrap_or(&0) as f64;
+        let post = *meta.post_balances.get(i).unwrap_or(&0) as f64;
+        let decrease = pre - post;
 
-        tokio::time::sleep(std::time::Duration::from_millis(50)).await;
+        if decrease > 1_000_000.0 {
+            if best_sender.is_none() || decrease > best_sender.as_ref().unwrap().1 {
+                best_sender = Some((key.pubkey.clone(), decrease));
+            }
+        }
+    }
 
-        let tx = match rpc.get_transaction(&sig_info.signature).await {
-            Ok(t) => t,
+    let amount_sol = inflow / LAMPORTS_PER_SOL;
+
+    match best_sender {
+        Some((sender, _)) => Some((sender, amount_sol)),
+        None => Some(("unknown".to_string(), amount_sol)),
+    }
+}
+
+/// Classify trading wallets as bot or external based on wallet freshness.
+///
+/// Bot wallets are disposable — created specifically for this token launch:
+///   - Few total transactions (< 50 lifetime)
+///   - Created shortly before the token (oldest tx within 30 min of creation)
+///
+/// External wallets are established — they existed before this token:
+///   - Many transactions (50+), OR
+///   - Oldest transaction is well before the token launch
+///
+/// For identified bot wallets, funding amount is determined from the wallet's
+/// earliest transaction using raw SOL balance changes (works for all transfer types).
+async fn classify_wallets_by_freshness(
+    rpc: &SolanaRpc,
+    trading_wallets: &[String],
+    creation_time: i64,
+) -> HashMap<String, Option<f64>> {
+    let mut bot_wallets: HashMap<String, Option<f64>> = HashMap::new();
+
+    // Bot wallets must have been created within this window before token launch
+    let earliest_creation = creation_time - 1800; // 30 minutes before
+
+    for (i, wallet) in trading_wallets.iter().enumerate() {
+        if i > 0 && i % 50 == 0 {
+            info!(
+                "  checked {}/{} wallets ({} bot so far)",
+                i,
+                trading_wallets.len(),
+                bot_wallets.len()
+            );
+        }
+
+        // 1. Get wallet's transaction history
+        let sigs = match rpc.get_signatures(wallet, 50).await {
+            Ok(s) => s,
             Err(_) => continue,
         };
 
-        if let Some((sender, amount)) = find_sol_transfer_to(&tx, wallet) {
-            if sender == primary {
-                return Some(amount);
-            }
+        // 2. Established wallets have 50+ txs → external
+        if sigs.len() >= 50 {
+            continue;
         }
+
+        // 3. Check the wallet's oldest transaction time
+        let oldest_sig = match sigs.last() {
+            Some(s) => s,
+            None => continue,
+        };
+
+        let oldest_time = match oldest_sig.block_time {
+            Some(t) => t,
+            None => continue,
+        };
+
+        // 4. If the wallet existed before the launch window → external
+        if oldest_time < earliest_creation {
+            continue;
+        }
+
+        // 5. This is a fresh wallet created near launch time → bot wallet
+        //    Determine funding amount from the oldest transaction's balance change
+        let fund_sol = determine_wallet_funding(rpc, wallet, oldest_sig).await;
+
+        debug!(
+            wallet = %wallet,
+            txs = sigs.len(),
+            fund = format!("{:.4}", fund_sol.unwrap_or(0.0)),
+            "Bot wallet (fresh, created near launch)"
+        );
+        bot_wallets.insert(wallet.clone(), fund_sol);
+
+        tokio::time::sleep(std::time::Duration::from_millis(25)).await;
     }
 
-    None
+    info!(bot_wallets = bot_wallets.len(), "Wallet classification complete");
+    bot_wallets
 }
 
-/// Parse a transaction to find a system program transfer TO a specific wallet.
-/// Returns (sender, amount_sol) if found.
-fn find_sol_transfer_to(tx: &TransactionResult, to: &str) -> Option<(String, f64)> {
-    let instructions = tx.transaction["message"]["instructions"].as_array()?;
-
-    for ix in instructions {
-        if ix["program"].as_str() == Some("system") {
-            if let Some(parsed) = ix.get("parsed") {
-                let tx_type = parsed["type"].as_str().unwrap_or_default();
-                if tx_type == "transfer" || tx_type == "transferChecked" {
-                    let dest = parsed["info"]["destination"].as_str()?;
-                    if dest == to {
-                        let lamports = parsed["info"]["lamports"].as_u64()?;
-                        let source = parsed["info"]["source"].as_str()?;
-                        return Some((source.to_string(), lamports as f64 / LAMPORTS_PER_SOL));
-                    }
-                }
-            }
-        }
+/// Determine how much SOL a bot wallet was funded with by looking at its
+/// oldest transaction's balance change.
+async fn determine_wallet_funding(
+    rpc: &SolanaRpc,
+    wallet: &str,
+    oldest_sig: &SignatureInfo,
+) -> Option<f64> {
+    if oldest_sig.err.is_some() {
+        return None;
     }
 
-    // Also check inner instructions (some txs nest system transfers)
-    if let Some(meta) = &tx.meta {
-        if let Some(inner) = tx.transaction.get("meta").and_then(|m| m["innerInstructions"].as_array()) {
-            for inner_set in inner {
-                if let Some(inner_ixs) = inner_set["instructions"].as_array() {
-                    for ix in inner_ixs {
-                        if ix["program"].as_str() == Some("system") {
-                            if let Some(parsed) = ix.get("parsed") {
-                                let tx_type = parsed["type"].as_str().unwrap_or_default();
-                                if tx_type == "transfer" {
-                                    let dest = parsed["info"]["destination"].as_str().unwrap_or_default();
-                                    if dest == to {
-                                        let lamports = parsed["info"]["lamports"].as_u64().unwrap_or(0);
-                                        let source = parsed["info"]["source"].as_str().unwrap_or_default();
-                                        if !source.is_empty() && lamports > 0 {
-                                            return Some((
-                                                source.to_string(),
-                                                lamports as f64 / LAMPORTS_PER_SOL,
-                                            ));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        let _ = meta; // suppress unused warning
-    }
+    let tx = rpc.get_transaction(&oldest_sig.signature).await.ok()?;
+    let meta = tx.meta.as_ref()?;
+    let account_keys = extract_account_keys(&tx.transaction);
 
-    None
+    let wallet_idx = account_keys.iter().position(|k| k.pubkey == wallet)?;
+    let pre = *meta.pre_balances.get(wallet_idx)? as f64 / LAMPORTS_PER_SOL;
+    let post = *meta.post_balances.get(wallet_idx)? as f64 / LAMPORTS_PER_SOL;
+
+    let increase = post - pre;
+    if increase > 0.001 {
+        Some(increase)
+    } else {
+        // The oldest tx might be the buy itself (bundled funding+buy).
+        // In that case the postBalance is the remaining SOL after buying.
+        // Use postBalance as a lower bound for funding.
+        if post > 0.001 {
+            Some(post)
+        } else {
+            None
+        }
+    }
 }
 
 // ─── Wallet Phase Classification ────────────────────────────────────────────
@@ -751,6 +802,9 @@ fn build_analysis(
         .filter(|t| external_set.contains(t.wallet.as_str()))
         .count();
 
+    // ── Profitability ──────────────────────────────────────────────────────
+    let profitability = compute_profitability(trades, creator, &initial_set, &staggered_set, &external_info);
+
     // ── Assumed config ──────────────────────────────────────────────────────
     let assumed_config = build_assumed_config(
         &creator_info,
@@ -774,8 +828,90 @@ fn build_analysis(
         initial_buyers: initial_info,
         staggered_buyers: staggered_info,
         external_activity: external_info,
+        profitability,
         trade_timeline: timeline,
         assumed_config,
+    }
+}
+
+fn compute_profitability(
+    trades: &[Trade],
+    creator: &str,
+    initial_set: &HashSet<&str>,
+    staggered_set: &HashSet<&str>,
+    external: &ExternalInfo,
+) -> Profitability {
+    let mut creator_spent = 0.0;
+    let mut creator_received = 0.0;
+    let mut bot_spent = 0.0;
+    let mut bot_received = 0.0;
+
+    for trade in trades {
+        let is_bot = trade.wallet == creator
+            || initial_set.contains(trade.wallet.as_str())
+            || staggered_set.contains(trade.wallet.as_str());
+
+        match trade.action {
+            TradeAction::Create | TradeAction::Buy => {
+                if trade.wallet == creator {
+                    creator_spent += trade.sol_amount;
+                }
+                if is_bot {
+                    bot_spent += trade.sol_amount;
+                }
+            }
+            TradeAction::Sell => {
+                if trade.wallet == creator {
+                    creator_received += trade.sol_amount;
+                }
+                if is_bot {
+                    bot_received += trade.sol_amount;
+                }
+            }
+            _ => {}
+        }
+    }
+
+    let creator_net = creator_received - creator_spent;
+    let bot_net = bot_received - bot_spent;
+    let external_net_buy = external.total_buy_sol - external.total_sell_sol;
+    let estimated_overhead = (bot_spent - bot_received).max(0.0);
+
+    // The operation is profitable if bot wallets got back more than they put in
+    let profitable = bot_net > 0.0;
+
+    let verdict = if external.unique_wallets == 0 {
+        if bot_net >= 0.0 {
+            "No external buyers, but bot broke even or profited (unusual)".to_string()
+        } else {
+            format!(
+                "No external buyers — bot lost {:.4} SOL to fees/slippage",
+                bot_net.abs()
+            )
+        }
+    } else if profitable {
+        format!(
+            "PROFITABLE — external buyers injected {:.4} SOL net, bot profited {:.4} SOL",
+            external_net_buy, bot_net
+        )
+    } else {
+        format!(
+            "UNPROFITABLE — external buyers injected {:.4} SOL net, but overhead was {:.4} SOL (need {:.4} more)",
+            external_net_buy, estimated_overhead, (estimated_overhead - external_net_buy).max(0.0)
+        )
+    };
+
+    Profitability {
+        creator_spent_sol: round4(creator_spent),
+        creator_received_sol: round4(creator_received),
+        creator_net_sol: round4(creator_net),
+        bot_total_spent_sol: round4(bot_spent),
+        bot_total_received_sol: round4(bot_received),
+        bot_net_sol: round4(bot_net),
+        external_net_buy_sol: round4(external_net_buy),
+        estimated_overhead_sol: round4(estimated_overhead),
+        profitable,
+        verdict,
     }
 }
 
