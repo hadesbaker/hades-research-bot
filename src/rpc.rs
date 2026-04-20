@@ -100,16 +100,6 @@ impl SolanaRpc {
         Ok(all_sigs)
     }
 
-    /// Fetch a limited number of signatures for an address (newest first).
-    pub async fn get_signatures(
-        &self,
-        address: &str,
-        limit: usize,
-    ) -> anyhow::Result<Vec<SignatureInfo>> {
-        let params = serde_json::json!([address, {"limit": limit}]);
-        self.rpc_call("getSignaturesForAddress", params).await
-    }
-
     /// Fetch a single transaction by signature with jsonParsed encoding.
     pub async fn get_transaction(&self, signature: &str) -> anyhow::Result<TransactionResult> {
         let params = serde_json::json!([

@@ -4,14 +4,13 @@ use tracing_subscriber::{fmt, EnvFilter};
 
 use hades_research_bot::analysis;
 use hades_research_bot::rpc::SolanaRpc;
+use hades_research_bot::types::*;
 
 const RESULTS_DIR: &str = "results";
 
 #[tokio::main]
 async fn main() {
-    // Init logging
-    let filter = EnvFilter::try_from_default_env()
-        .unwrap_or_else(|_| EnvFilter::new("info"));
+    let filter = EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info"));
     fmt()
         .with_env_filter(filter)
         .with_target(false)
@@ -28,9 +27,8 @@ async fn main() {
 async fn run() -> anyhow::Result<()> {
     dotenvy::dotenv().ok();
 
-    // Load config from .env
-    let rpc_url = std::env::var("RPC_URL")
-        .map_err(|_| anyhow::anyhow!("RPC_URL not set in .env"))?;
+    let rpc_url =
+        std::env::var("RPC_URL").map_err(|_| anyhow::anyhow!("RPC_URL not set in .env"))?;
 
     let token_addresses_raw = std::env::var("TOKEN_ADDRESSES")
         .map_err(|_| anyhow::anyhow!("TOKEN_ADDRESSES not set in .env"))?;
@@ -47,7 +45,6 @@ async fn run() -> anyhow::Result<()> {
 
     info!(count = mints.len(), "Tokens to analyze");
 
-    // Create results directory
     let results_dir = PathBuf::from(RESULTS_DIR);
     std::fs::create_dir_all(&results_dir)?;
 
@@ -62,106 +59,11 @@ async fn run() -> anyhow::Result<()> {
 
         match analysis::analyze_token(&rpc, mint).await {
             Ok(analysis) => {
-                // Write to results/<mint>.json
                 let output_path = results_dir.join(format!("{}.json", mint));
                 let json = serde_json::to_string_pretty(&analysis)?;
                 std::fs::write(&output_path, &json)?;
 
-                // Print summary
-                println!();
-                println!("┌─────────────────────────────────────────────────────────────");
-                println!("│ {} ({}) — Analysis Complete", analysis.token_name, analysis.token_ticker);
-                println!("├─────────────────────────────────────────────────────────────");
-                println!("│ Mint:              {}", analysis.mint);
-                println!("│ Transactions:      {} total ({} bot, {} external)",
-                    analysis.total_transactions,
-                    analysis.total_bot_transactions,
-                    analysis.total_external_transactions,
-                );
-                if let Some(ref pw) = analysis.primary_wallet {
-                    println!("│ Primary wallet:    {}", pw);
-                }
-                println!("│ Creator:           {}", analysis.creator.wallet);
-                if let Some(buy) = analysis.creator.buy_amount_sol {
-                    println!("│ Creator buy:       {:.4} SOL", buy);
-                }
-                println!("│ Initial buyers:    {} (total {:.4} SOL)",
-                    analysis.initial_buyers.count,
-                    analysis.initial_buyers.total_sol,
-                );
-                println!("│ Staggered buyers:  {} ({} buys, {} sells, {:.4} SOL bought)",
-                    analysis.staggered_buyers.count,
-                    analysis.staggered_buyers.total_buys,
-                    analysis.staggered_buyers.total_sells,
-                    analysis.staggered_buyers.total_buy_sol,
-                );
-                println!("│ External wallets:  {} ({} buys = {:.4} SOL)",
-                    analysis.external_activity.unique_wallets,
-                    analysis.external_activity.total_buys,
-                    analysis.external_activity.total_buy_sol,
-                );
-                println!("├─────────────────────────────────────────────────────────────");
-                let p = &analysis.profitability;
-                println!("│ PROFITABILITY");
-                println!("│");
-                println!("│ Creator:    spent {:.4}  recv {:.4}  net {:+.4} SOL",
-                    p.creator_spent_sol, p.creator_received_sol, p.creator_net_sol);
-                println!("│ All bots:   spent {:.4}  recv {:.4}  net {:+.4} SOL",
-                    p.bot_total_spent_sol, p.bot_total_received_sol, p.bot_net_sol);
-                println!("│ External:   net buy {:+.4} SOL", p.external_net_buy_sol);
-                println!("│ Overhead:   {:.4} SOL", p.estimated_overhead_sol);
-                println!("│");
-                println!("│ {}", if p.profitable { "★" } else { "✗" });
-                println!("│ {}", p.verdict);
-                println!("├─────────────────────────────────────────────────────────────");
-                println!("│ ASSUMED CONFIG (Strategy {})", analysis.assumed_config.strategy);
-                println!("│ {}", analysis.assumed_config.strategy_reasoning);
-                println!("│");
-
-                let cfg = &analysis.assumed_config;
-                if let Some(v) = cfg.creator_fund_sol {
-                    println!("│ creator_fund_sol           = {:.4}", v);
-                }
-                if let Some(v) = cfg.creator_min_buy_amount {
-                    println!("│ creator_min_buy_amount     = {:.4}", v);
-                }
-                if let Some(v) = cfg.creator_max_buy_amount {
-                    println!("│ creator_max_buy_amount     = {:.4}", v);
-                }
-                println!("│ initial_buyer_count        = {}", cfg.initial_buyer_count);
-                if let Some(v) = cfg.initial_buyer_min_buy_amount {
-                    println!("│ initial_buyer_min_buy_amount = {:.4}", v);
-                }
-                if let Some(v) = cfg.initial_buyer_max_buy_amount {
-                    println!("│ initial_buyer_max_buy_amount = {:.4}", v);
-                }
-                println!("│ buyer_count                = {}", cfg.buyer_count);
-                if let Some(v) = cfg.buyer_fund_sol {
-                    println!("│ buyer_fund_sol             = {:.4}", v);
-                }
-                if let Some(v) = cfg.buy_amount_min_sol {
-                    println!("│ buy_amount_min_sol         = {:.4}", v);
-                }
-                if let Some(v) = cfg.buy_amount_max_sol {
-                    println!("│ buy_amount_max_sol         = {:.4}", v);
-                }
-                if let Some(v) = cfg.trade_delay_min_ms {
-                    println!("│ trade_delay_min_ms         = {}", v);
-                }
-                if let Some(v) = cfg.trade_delay_max_ms {
-                    println!("│ trade_delay_max_ms         = {}", v);
-                }
-                if let Some(v) = cfg.buy_probability {
-                    println!("│ buy_probability            = {:.2}", v);
-                }
-                if let Some(v) = cfg.sell_pct_min {
-                    println!("│ sell_pct_min               = {:.2}", v);
-                }
-                if let Some(v) = cfg.sell_pct_max {
-                    println!("│ sell_pct_max               = {:.2}", v);
-                }
-                println!("└─────────────────────────────────────────────────────────────");
-                println!();
+                print_summary(&analysis);
                 info!(path = %output_path.display(), "Results written");
             }
             Err(e) => {
@@ -172,4 +74,93 @@ async fn run() -> anyhow::Result<()> {
 
     info!("All analyses complete");
     Ok(())
+}
+
+fn print_summary(a: &TokenAnalysis) {
+    let h = &a.highlights;
+    let s = &a.trade_stats;
+
+    println!();
+    println!("┌─────────────────────────────────────────────────────────────");
+    println!("│ {} ({}) — Analysis Complete", a.token_name, a.token_ticker);
+    println!("├─────────────────────────────────────────────────────────────");
+    println!("│ Mint:              {}", a.mint);
+    println!("│ Creator:           {}", a.creator.wallet);
+    println!("│ Creator txs:       {}", a.creator.trades.len());
+    println!("├─────────────────────────────────────────────────────────────");
+    println!("│ HIGHLIGHTS");
+    println!(
+        "│ Total trades:      {} ({} buys, {} sells)",
+        h.total_trades, h.total_buys, h.total_sells
+    );
+    println!("│ Unique wallets:    {}", h.unique_wallets);
+    if let Some(ref m) = h.most_active_wallet {
+        println!("│ Most active:       {} ({} trades)", m.address, m.trade_count);
+    }
+    println!("│ Buy volume:        {:.4} SOL", h.total_buy_volume_sol);
+    println!("│ Sell volume:       {:.4} SOL", h.total_sell_volume_sol);
+    println!("│ Net inflow:        {:+.4} SOL", h.net_inflow_sol);
+    if let Some(top) = h.top_buys.first() {
+        println!("│ Top buy:           {:.4} SOL ({})", top.sol_amount, top.wallet);
+    }
+    if let Some(top) = h.top_sells.first() {
+        println!("│ Top sell:          {:.4} SOL ({})", top.sol_amount, top.wallet);
+    }
+    println!("├─────────────────────────────────────────────────────────────");
+    println!("│ TRADE STATS");
+    if let Some(p) = s.buy_probability {
+        println!("│ Buy probability:   {:.4}", p);
+    }
+    if let Some(p) = s.sell_probability {
+        println!("│ Sell probability:  {:.4}", p);
+    }
+    println!("│");
+    println!(
+        "│ Buy SOL:    min {}  p25 {}  avg {}  p75 {}  max {}",
+        fmt_f64(s.buys.min),
+        fmt_f64(s.buys.p25),
+        fmt_f64(s.buys.avg),
+        fmt_f64(s.buys.p75),
+        fmt_f64(s.buys.max)
+    );
+    println!(
+        "│ Sell SOL:   min {}  p25 {}  avg {}  p75 {}  max {}",
+        fmt_f64(s.sells.min),
+        fmt_f64(s.sells.p25),
+        fmt_f64(s.sells.avg),
+        fmt_f64(s.sells.p75),
+        fmt_f64(s.sells.max)
+    );
+    println!(
+        "│ Delays ms:  min {}  p25 {}  avg {}  p75 {}  max {}",
+        fmt_i64(s.delays_ms.min),
+        fmt_i64(s.delays_ms.p25),
+        fmt_i64(s.delays_ms.avg),
+        fmt_i64(s.delays_ms.p75),
+        fmt_i64(s.delays_ms.max)
+    );
+    println!(
+        "│ Sell %:     min {}  p25 {}  avg {}  p75 {}  max {}",
+        fmt_f64(s.sell_percentages.min),
+        fmt_f64(s.sell_percentages.p25),
+        fmt_f64(s.sell_percentages.avg),
+        fmt_f64(s.sell_percentages.p75),
+        fmt_f64(s.sell_percentages.max)
+    );
+    println!("└─────────────────────────────────────────────────────────────");
+    println!();
+}
+
+fn fmt_f64(v: Option<f64>) -> String {
+    match v {
+        Some(x) => format!("{:.4}", x),
+        None => "-".into(),
+    }
+}
+
+fn fmt_i64(v: Option<i64>) -> String {
+    match v {
+        Some(x) => x.to_string(),
+        None => "-".into(),
+    }
 }

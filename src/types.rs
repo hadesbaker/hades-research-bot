@@ -78,7 +78,7 @@ pub struct CoinData {
     pub usd_market_cap: f64,
 }
 
-// ─── Parsed Trade ───────────────────────────────────────────────────────────
+// ─── Parsed Trade (intermediate) ────────────────────────────────────────────
 
 #[derive(Debug, Clone, Serialize)]
 pub enum TradeAction {
@@ -110,13 +110,9 @@ pub struct Trade {
     pub timestamp: i64,
     pub wallet: String,
     pub action: TradeAction,
-    /// SOL spent (buy) or received (sell)
     pub sol_amount: f64,
-    /// Tokens received (buy) or sold (sell)
     pub token_amount: f64,
-    /// Token balance before this trade
     pub token_balance_before: f64,
-    /// Token balance after this trade
     pub token_balance_after: f64,
 }
 
@@ -130,121 +126,89 @@ pub struct TokenAnalysis {
     pub pumpfun_url: String,
     pub created_at_unix: i64,
     pub analysis_window_minutes: u64,
-    pub total_transactions: usize,
-    pub total_bot_transactions: usize,
-    pub total_external_transactions: usize,
-
-    pub primary_wallet: Option<String>,
-    pub creator: CreatorInfo,
-    pub initial_buyers: InitialBuyerInfo,
-    pub staggered_buyers: StaggeredBuyerInfo,
-    pub external_activity: ExternalInfo,
-    pub profitability: Profitability,
-    pub trade_timeline: Vec<TimelineEntry>,
-    pub assumed_config: AssumedConfig,
+    pub creator: Creator,
+    pub highlights: Highlights,
+    pub trade_stats: TradeStats,
 }
 
 #[derive(Debug, Serialize)]
-pub struct Profitability {
-    /// Creator spent (create + buy) vs received (sells)
-    pub creator_spent_sol: f64,
-    pub creator_received_sol: f64,
-    pub creator_net_sol: f64,
-    /// All bot wallets combined (creator + initial + staggered)
-    pub bot_total_spent_sol: f64,
-    pub bot_total_received_sol: f64,
-    pub bot_net_sol: f64,
-    /// External buyers injected this much SOL (buys minus sells)
-    pub external_net_buy_sol: f64,
-    /// Estimated overhead (fees, slippage, rent) = bot_spent - bot_received when no externals
-    pub estimated_overhead_sol: f64,
-    /// Did external capital exceed the overhead?
-    pub profitable: bool,
-    pub verdict: String,
-}
-
-#[derive(Debug, Serialize)]
-pub struct CreatorInfo {
+pub struct Creator {
     pub wallet: String,
-    pub fund_sol: Option<f64>,
-    pub buy_amount_sol: Option<f64>,
-    pub buy_delay_after_create_ms: Option<i64>,
+    pub trades: Vec<CreatorTrade>,
 }
 
 #[derive(Debug, Serialize)]
-pub struct InitialBuyerInfo {
+pub struct CreatorTrade {
+    pub timestamp: i64,
+    pub signature: String,
+    pub action: TradeAction,
+    pub sol_amount: f64,
+    pub token_amount: f64,
+    pub ms_from_create: i64,
+}
+
+#[derive(Debug, Serialize)]
+pub struct Highlights {
+    pub total_trades: usize,
+    pub total_buys: usize,
+    pub total_sells: usize,
+    pub unique_wallets: usize,
+    pub most_active_wallet: Option<MostActiveWallet>,
+    pub top_buys: Vec<TopTrade>,
+    pub top_sells: Vec<TopTrade>,
+    pub total_buy_volume_sol: f64,
+    pub total_sell_volume_sol: f64,
+    pub net_inflow_sol: f64,
+}
+
+#[derive(Debug, Serialize)]
+pub struct MostActiveWallet {
+    pub address: String,
+    pub trade_count: usize,
+}
+
+#[derive(Debug, Serialize)]
+pub struct TopTrade {
+    pub wallet: String,
+    pub sol_amount: f64,
+    pub timestamp: i64,
+}
+
+#[derive(Debug, Serialize)]
+pub struct TradeStats {
+    pub buys: StatBlock,
+    pub sells: StatBlock,
+    pub delays_ms: DelayStats,
+    pub sell_percentages: PctStats,
+    pub buy_probability: Option<f64>,
+    pub sell_probability: Option<f64>,
+}
+
+#[derive(Debug, Serialize)]
+pub struct StatBlock {
     pub count: usize,
-    pub wallets: Vec<WalletBuyInfo>,
-    pub min_buy_sol: Option<f64>,
-    pub max_buy_sol: Option<f64>,
+    pub min: Option<f64>,
+    pub max: Option<f64>,
+    pub avg: Option<f64>,
+    pub p25: Option<f64>,
+    pub p75: Option<f64>,
     pub total_sol: f64,
 }
 
 #[derive(Debug, Serialize)]
-pub struct WalletBuyInfo {
-    pub pubkey: String,
-    pub fund_sol: Option<f64>,
-    pub buy_amount_sol: f64,
-    pub timestamp: i64,
+pub struct DelayStats {
+    pub min: Option<i64>,
+    pub max: Option<i64>,
+    pub avg: Option<i64>,
+    pub p25: Option<i64>,
+    pub p75: Option<i64>,
 }
 
 #[derive(Debug, Serialize)]
-pub struct StaggeredBuyerInfo {
-    pub count: usize,
-    pub total_buys: usize,
-    pub total_sells: usize,
-    pub min_buy_sol: Option<f64>,
-    pub max_buy_sol: Option<f64>,
-    pub total_buy_sol: f64,
-    pub total_sell_sol: f64,
-    pub fund_per_wallet_sol: Option<f64>,
-    pub delays_ms: Vec<i64>,
-    pub min_delay_ms: Option<i64>,
-    pub max_delay_ms: Option<i64>,
-    pub avg_delay_ms: Option<i64>,
-    pub buy_probability: Option<f64>,
-    pub sell_percentages: Vec<f64>,
-    pub sell_pct_min: Option<f64>,
-    pub sell_pct_max: Option<f64>,
-}
-
-#[derive(Debug, Serialize)]
-pub struct ExternalInfo {
-    pub unique_wallets: usize,
-    pub total_buys: usize,
-    pub total_sells: usize,
-    pub total_buy_sol: f64,
-    pub total_sell_sol: f64,
-}
-
-#[derive(Debug, Serialize)]
-pub struct TimelineEntry {
-    pub timestamp: i64,
-    pub signature: String,
-    pub wallet: String,
-    pub wallet_role: String,
-    pub action: TradeAction,
-    pub sol_amount: f64,
-    pub token_amount: f64,
-}
-
-#[derive(Debug, Serialize)]
-pub struct AssumedConfig {
-    pub strategy: u8,
-    pub strategy_reasoning: String,
-    pub creator_fund_sol: Option<f64>,
-    pub creator_min_buy_amount: Option<f64>,
-    pub creator_max_buy_amount: Option<f64>,
-    pub initial_buyer_count: usize,
-    pub initial_buyer_min_buy_amount: Option<f64>,
-    pub initial_buyer_max_buy_amount: Option<f64>,
-    pub buyer_count: usize,
-    pub buyer_fund_sol: Option<f64>,
-    pub buy_amount_min_sol: Option<f64>,
-    pub buy_amount_max_sol: Option<f64>,
-    pub trade_delay_min_ms: Option<i64>,
-    pub trade_delay_max_ms: Option<i64>,
-    pub buy_probability: Option<f64>,
-    pub sell_pct_min: Option<f64>,
-    pub sell_pct_max: Option<f64>,
+pub struct PctStats {
+    pub min: Option<f64>,
+    pub max: Option<f64>,
+    pub avg: Option<f64>,
+    pub p25: Option<f64>,
+    pub p75: Option<f64>,
 }
