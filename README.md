@@ -1,265 +1,210 @@
 # hades-research-bot
 
-A Rust-based research tool that analyzes [pump.fun](https://pump.fun) tokens on the Solana blockchain to reverse-engineer the bot configurations that launched them. Built as a companion to [hades-spider-bot](https://github.com/hadesbaker/hades-spider-bot) — feed it any pump.fun token mint address and it produces a full breakdown of the launch strategy, wallet structure, trade timing, and an assumed `config.toml` you can use to replicate or refine your own spider-bot runs.
+A Rust command-line tool that dissects the launch of any [pump.fun](https://pump.fun) token on Solana. Give it one or more token mint addresses and, for each, it pulls the first 15 minutes of on-chain activity, classifies every transaction as a **create**, **buy**, or **sell**, identifies the creator wallet, and writes a structured JSON report — a creator timeline, headline highlights (volumes, top trades, wallet counts), and statistical distributions of trade sizes, timing, and sell behaviour. It is entirely **read-only**: it holds no wallet, signs nothing, and never trades.
 
-## How It Works
+> **Read-only tool.** hades-research-bot only reads public blockchain and API data — it holds no wallet, signs nothing, and cannot trade or move funds. Its analysis is a best-effort heuristic estimate, not ground truth.
+>
+> **⚠️ Educational use only — see the [Disclaimer](#disclaimer) before relying on its output.**
 
-The research bot performs a multi-phase analysis of on-chain transaction data:
+## Features
 
-1. **Fetch coin metadata** — queries the pump.fun API for the token's name, ticker, description, and current market cap.
-2. **Pull transaction history** — fetches all transaction signatures for the mint address from the Solana RPC, with automatic pagination for tokens with large histories.
-3. **Filter to launch window** — isolates the first 15 minutes of the token's life, which captures the critical launch phase (creation, initial buys, staggered trading, and early external activity).
-4. **Parse each transaction** — for every transaction in the window, extracts the signer wallet, SOL balance change, token balance change, and classifies the action as create, buy, or sell.
-5. **Identify the creator** — the first transaction's signer is the creator wallet.
-6. **Trace the primary wallet** — inspects the creator's transaction history to find the wallet that funded it. This is the bot operator's main wallet.
-7. **Classify all trading wallets** — for each wallet that traded the token, checks if it was funded by the same primary wallet. If yes, it's a bot wallet. If not, it's an external buyer.
-8. **Separate bot phases** — bot wallets are further classified as **initial buyers** (single rapid-fire buy immediately after creation) or **staggered buyers** (multiple trades spread over time with delays).
-9. **Compute statistics** — calculates buy/sell counts, SOL volumes, trade delays, sell percentages, and buy probability for each wallet category.
-10. **Generate assumed config** — maps all detected parameters back to `hades-spider-bot`'s `config.toml` variables, including strategy detection.
-11. **Write results** — outputs a comprehensive JSON analysis file per token to the `results/` directory.
-
-## Architecture
-
-```
-src/
-  main.rs              Entry point, .env loading, orchestration, summary output
-  lib.rs               Module declarations
-  rpc.rs               Solana JSON-RPC client (signatures, transactions, pump.fun API)
-  types.rs             All data structures (RPC responses, trades, analysis output)
-  analysis.rs          Core engine: tx parsing, wallet classification, config estimation
-
-.env                   RPC endpoint and token addresses
-results/               Output JSON files (one per analyzed token)
-```
+- Analyzes any pump.fun token from just its mint address — no wallet, no SOL, no signing
+- Reconstructs the **first 15 minutes** of a token's life from on-chain data
+- Auto-paginates the full signature history (1,000 per page, up to a 50,000 safety cap)
+- Classifies every transaction as **create**, **buy**, or **sell**
+- Per-token JSON report with three sections — a **creator** timeline, **highlights**, and **trade stats**
+- Highlights: total trades, unique wallets, most active wallet, top 5 buys & sells, buy/sell volume, net inflow
+- Trade stats: min / avg / p25 / p75 / max distributions for buy size, sell size, inter-trade delay, and sell-percentage, plus buy/sell probability
+- Batch mode — pass many mints, get one report each
+- Console summary box printed per token
 
 ## Prerequisites
 
-- [Rust](https://www.rust-lang.org/tools/install) (cargo 1.89+)
-- [Git](https://git-scm.com/) (2.42+)
-- A Solana mainnet RPC endpoint (no wallet or SOL required — this tool is read-only)
+| Tool | Version / type | Why |
+| ---- | -------------- | --- |
+| Rust | edition 2024 — a recent stable toolchain (1.85+; developed on 1.89) | Required by `edition = "2024"` in `Cargo.toml` |
+| A Solana mainnet RPC | HTTP endpoint supporting `getSignaturesForAddress` and `getTransaction` with `jsonParsed` encoding | All transaction data is read from here. A paid provider (QuickNode, Helius, Triton, …) is recommended — large token histories will rate-limit the public endpoint. |
+
+No wallet, keypair, or SOL is required — the tool only reads public data.
 
 ## Setup
 
-### 1. Clone the repository
-
 ```bash
+# 1. Clone
 git clone https://github.com/hadesbaker/hades-research-bot.git
 cd hades-research-bot
-```
 
-### 2. Create your `.env` file
-
-Copy the example and fill in your values:
-
-```bash
+# 2. Create your .env (git-ignored — copy the template)
 cp .env.example .env
+# edit .env:
+#   RPC_URL=...            your Solana RPC endpoint
+#   TOKEN_ADDRESSES=...    comma-separated pump.fun mint addresses
+#   RUST_LOG=info          log verbosity (optional)
+
+# 3. Build
+cargo build --release
 ```
 
-```env
-RPC_URL="https://your-rpc-endpoint.example.com"
-TOKEN_ADDRESSES="mint1,mint2,mint3"
-RUST_LOG="info"
-```
-
-### 3. Build and run
+## Running
 
 ```bash
 cargo run --release
 ```
 
-The bot will analyze each token and write results to `results/<mint_address>.json`.
+There are no command-line flags — the tool reads everything from `.env`. It analyzes each mint in `TOKEN_ADDRESSES` in turn, prints a summary box, and writes a report to `results/<mint>.json`. The `results/` directory is created automatically and is git-ignored.
 
-## Environment Variables
+### Logging
 
-| Variable          | Required | Description                                                                                                                                          |
-| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `RPC_URL`         | Yes      | Solana mainnet RPC endpoint. Free tiers from [QuikNode](https://www.quicknode.com/), [Helius](https://helius.dev/), or [Alchemy](https://www.alchemy.com/) work fine. The endpoint must support `getSignaturesForAddress` and `getTransaction` with `jsonParsed` encoding. |
-| `TOKEN_ADDRESSES` | Yes      | Comma-separated list of pump.fun token mint addresses to analyze. Each token produces its own JSON output file.                                       |
-| `RUST_LOG`        | No       | Log verbosity. Options: `trace`, `debug`, `info` (default), `warn`, `error`. Use `debug` for detailed RPC call logging.                              |
+Verbosity is controlled by `RUST_LOG` (read from `.env` or the shell environment): `trace`, `debug`, `info` (default), `warn`, or `error`. Use `RUST_LOG=debug` to see each RPC page fetch and per-transaction progress. To keep a log file, redirect output:
 
-## Output Format
+```bash
+cargo run --release 2>&1 | tee run.log
+```
 
-Each analyzed token produces a JSON file at `results/<mint_address>.json` with the following structure:
+## Configuration
 
-### Top-Level Fields
+All configuration is via `.env` (git-ignored — copy it from `.env.example`):
 
-| Field                        | Type    | Description                                          |
-| ---------------------------- | ------- | ---------------------------------------------------- |
-| `mint`                       | string  | Token mint address                                   |
-| `token_name`                 | string  | Token name from pump.fun                             |
-| `token_ticker`               | string  | Token ticker symbol                                  |
-| `pumpfun_url`                | string  | Direct link to the token on pump.fun                 |
-| `created_at_unix`            | integer | Unix timestamp of the token creation transaction     |
-| `analysis_window_minutes`    | integer | Analysis window (15 minutes)                         |
-| `total_transactions`         | integer | Total parsed transactions in the window              |
-| `total_bot_transactions`     | integer | Transactions from identified bot wallets             |
-| `total_external_transactions`| integer | Transactions from external (non-bot) wallets         |
-| `primary_wallet`             | string  | The bot operator's main wallet (funding source)      |
+| Variable | Required | Purpose |
+| -------- | -------- | ------- |
+| `RPC_URL` | Yes | Solana RPC endpoint for `getSignaturesForAddress` and `getTransaction` (`jsonParsed`) |
+| `TOKEN_ADDRESSES` | Yes | Comma-separated pump.fun token mint addresses to analyze; each produces its own report |
+| `RUST_LOG` | No | Log verbosity — `trace` / `debug` / `info` (default) / `warn` / `error` |
 
-### Creator
+## How it works
 
-| Field                      | Type   | Description                                              |
-| -------------------------- | ------ | -------------------------------------------------------- |
-| `creator.wallet`           | string | Creator wallet public key                                |
-| `creator.fund_sol`         | float  | SOL the creator was funded with from the primary wallet  |
-| `creator.buy_amount_sol`   | float  | SOL the creator spent buying the token after creation    |
-| `creator.buy_delay_after_create_ms` | integer | Milliseconds between creation tx and creator buy tx |
+For each mint in `TOKEN_ADDRESSES`:
 
-### Initial Buyers
+1. **Fetch metadata** — queries the pump.fun API (`frontend-api-v3.pump.fun`) for the token's name and ticker; falls back to `unknown` / `???` if it is unavailable.
+2. **Fetch signature history** — pulls every transaction signature for the mint via `getSignaturesForAddress`, paginating 1,000 at a time (safety cap: 50,000).
+3. **Define the launch window** — the oldest successful transaction is taken as the token's creation; the analysis window is the **first 15 minutes** from that timestamp.
+4. **Fetch & parse transactions** — each in-window transaction is fetched (`getTransaction`, `jsonParsed`) and reduced to a trade: the signer wallet, its SOL balance change, and its token balance change. A 50 ms pause between calls keeps RPC load polite.
+5. **Classify** — the first transaction is the **create**; after that, a rise in the signer's token balance is a **buy** and a fall is a **sell**.
+6. **Identify the creator** — the signer of that first transaction.
+7. **Aggregate** — builds the creator timeline, the highlights, and the statistical trade distributions (over buys and sells only — the create is excluded).
+8. **Write the report** — writes `results/<mint>.json` and prints a summary box to the console.
 
-| Field                         | Type   | Description                                            |
-| ----------------------------- | ------ | ------------------------------------------------------ |
-| `initial_buyers.count`        | integer| Number of initial buyer wallets detected               |
-| `initial_buyers.wallets`      | array  | Per-wallet details (pubkey, fund_sol, buy_amount_sol)  |
-| `initial_buyers.min_buy_sol`  | float  | Smallest initial buyer purchase                        |
-| `initial_buyers.max_buy_sol`  | float  | Largest initial buyer purchase                         |
-| `initial_buyers.total_sol`    | float  | Total SOL spent by all initial buyers                  |
+## Output
 
-### Staggered Buyers
+Each analyzed token produces `results/<mint>.json` with three sections.
 
-| Field                              | Type   | Description                                                 |
-| ---------------------------------- | ------ | ----------------------------------------------------------- |
-| `staggered_buyers.count`           | integer| Number of staggered buyer wallets                           |
-| `staggered_buyers.total_buys`      | integer| Total buy transactions across all staggered buyers          |
-| `staggered_buyers.total_sells`     | integer| Total sell transactions (0 if Strategy 1 or 2)              |
-| `staggered_buyers.min_buy_sol`     | float  | Smallest staggered buy amount                               |
-| `staggered_buyers.max_buy_sol`     | float  | Largest staggered buy amount                                |
-| `staggered_buyers.total_buy_sol`   | float  | Total SOL spent on buys                                     |
-| `staggered_buyers.total_sell_sol`  | float  | Total SOL received from sells                               |
-| `staggered_buyers.fund_per_wallet_sol` | float | Average SOL each staggered buyer was funded with        |
-| `staggered_buyers.delays_ms`       | array  | All inter-trade delays in milliseconds                      |
-| `staggered_buyers.min_delay_ms`    | integer| Shortest delay between consecutive trades                   |
-| `staggered_buyers.max_delay_ms`    | integer| Longest delay between consecutive trades                    |
-| `staggered_buyers.avg_delay_ms`    | integer| Average delay between consecutive trades                    |
-| `staggered_buyers.buy_probability` | float  | Ratio of buys to total trades (buys + sells)                |
-| `staggered_buyers.sell_percentages`| array  | Percentage of holdings sold in each sell transaction         |
-| `staggered_buyers.sell_pct_min`    | float  | Smallest sell percentage observed                           |
-| `staggered_buyers.sell_pct_max`    | float  | Largest sell percentage observed                            |
+### Top level
 
-### External Activity
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `mint` | string | Token mint address |
+| `token_name` / `token_ticker` | string | Name and ticker from pump.fun (`unknown` / `???` if unavailable) |
+| `pumpfun_url` | string | Direct pump.fun link |
+| `created_at_unix` | integer | Unix timestamp of the creation transaction |
+| `analysis_window_minutes` | integer | Analysis window — always `15` |
+| `creator` / `highlights` / `trade_stats` | object | See below |
 
-| Field                           | Type    | Description                              |
-| ------------------------------- | ------- | ---------------------------------------- |
-| `external_activity.unique_wallets` | integer | Number of unique external wallets     |
-| `external_activity.total_buys`  | integer | Total external buy transactions          |
-| `external_activity.total_sells` | integer | Total external sell transactions         |
-| `external_activity.total_buy_sol` | float | Total SOL spent by external buyers       |
-| `external_activity.total_sell_sol`| float | Total SOL received by external sellers   |
+### `creator`
 
-### Trade Timeline
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `wallet` | string | Creator wallet (signer of the first transaction) |
+| `trades[]` | array | The creator's own in-window transactions — each has `timestamp`, `signature`, `action` (`Create` / `Buy` / `Sell`), `sol_amount`, `token_amount`, `ms_from_create` |
 
-A chronological array of every trade in the analysis window:
+### `highlights`
 
-| Field         | Type   | Description                                            |
-| ------------- | ------ | ------------------------------------------------------ |
-| `timestamp`   | integer| Unix timestamp                                         |
-| `signature`   | string | Solana transaction signature                           |
-| `wallet`      | string | Wallet that executed the trade                         |
-| `wallet_role` | string | `creator`, `initial_buyer`, `staggered_buyer`, or `external` |
-| `action`      | string | `Create`, `Buy`, or `Sell`                             |
-| `sol_amount`  | float  | SOL spent (buy) or received (sell)                     |
-| `token_amount`| float  | Tokens received (buy) or sold (sell)                   |
+Computed over **buy and sell transactions only** — the create is excluded.
 
-### Assumed Config
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `total_trades` / `total_buys` / `total_sells` | integer | Trade counts within the window |
+| `unique_wallets` | integer | Distinct wallets that bought or sold |
+| `most_active_wallet` | object | `{ address, trade_count }` — the wallet with the most trades |
+| `top_buys` / `top_sells` | array | Up to 5 largest buys / sells by SOL — each `{ wallet, sol_amount, timestamp }` |
+| `total_buy_volume_sol` / `total_sell_volume_sol` | float | Total SOL bought / sold |
+| `net_inflow_sol` | float | `total_buy_volume_sol − total_sell_volume_sol` |
 
-Maps detected parameters directly to `hades-spider-bot`'s `config.toml` variables:
+### `trade_stats`
 
-| Field                          | Type    | Description                                              |
-| ------------------------------ | ------- | -------------------------------------------------------- |
-| `strategy`                     | integer | Detected strategy (1–4). See strategy detection below    |
-| `strategy_reasoning`           | string  | Explanation of why this strategy was detected             |
-| `creator_fund_sol`             | float   | Estimated `creator_fund_sol`                             |
-| `creator_min_buy_amount`       | float   | Estimated `creator_min_buy_amount`                       |
-| `creator_max_buy_amount`       | float   | Estimated `creator_max_buy_amount`                       |
-| `initial_buyer_count`          | integer | Detected `initial_buyer_count`                           |
-| `initial_buyer_min_buy_amount` | float   | Estimated `initial_buyer_min_buy_amount`                 |
-| `initial_buyer_max_buy_amount` | float   | Estimated `initial_buyer_max_buy_amount`                 |
-| `buyer_count`                  | integer | Detected `buyer_count` (staggered buyers)                |
-| `buyer_fund_sol`               | float   | Estimated `buyer_fund_sol` (average funding per buyer)   |
-| `buy_amount_min_sol`           | float   | Estimated `buy_amount_min_sol`                           |
-| `buy_amount_max_sol`           | float   | Estimated `buy_amount_max_sol`                           |
-| `trade_delay_min_ms`           | integer | Estimated `trade_delay_min_ms`                           |
-| `trade_delay_max_ms`           | integer | Estimated `trade_delay_max_ms`                           |
-| `buy_probability`              | float   | Estimated `buy_probability` (Strategy 3 only)            |
-| `sell_pct_min`                 | float   | Estimated `sell_pct_min` (Strategy 3 only)               |
-| `sell_pct_max`                 | float   | Estimated `sell_pct_max` (Strategy 3 only)               |
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `buys` / `sells` | object | Distribution of buy / sell sizes in SOL — `count`, `min`, `max`, `avg`, `p25`, `p75`, `total_sol` |
+| `delays_ms` | object | Distribution of gaps between consecutive trades, in milliseconds — `min`, `max`, `avg`, `p25`, `p75` |
+| `sell_percentages` | object | Distribution of the fraction of holdings sold per sell — `min`, `max`, `avg`, `p25`, `p75` |
+| `buy_probability` / `sell_probability` | float | Share of all trades that were buys / sells |
 
-## Strategy Detection
+### Accuracy notes
 
-The bot detects which spider-bot strategy was used based on the wallet structure and trading patterns:
-
-| Strategy | Detection Rule                                                    |
-| -------- | ----------------------------------------------------------------- |
-| 1        | Staggered buyers only, no initial buyers                          |
-| 2        | Initial buyers + staggered buyers, buys only (no sells)           |
-| 3        | Initial buyers + staggered buyers with both buys and sells        |
-| 4        | Initial buyers only, no staggered buyers                          |
-
-## Wallet Classification
-
-The bot uses a two-phase approach to distinguish bot wallets from organic external buyers:
-
-1. **Funding source tracing** — the creator wallet's transaction history is inspected to find the wallet that funded it (the primary/operator wallet). Then every other trading wallet is checked for funding from the same source. Wallets funded by the primary wallet are classified as bot wallets.
-
-2. **Phase detection** — bot wallets are further split into initial buyers (single rapid-fire buy within seconds of creation) and staggered buyers (multiple trades with delays).
-
-Wallets not funded by the primary wallet are classified as external buyers.
-
-## Accuracy Notes
-
-- **SOL amounts** include transaction fees, ATA rent, and pump.fun fees (~1% per trade). Reported buy amounts are slightly higher than the actual `sol_amount` parameter used by the bot.
-- **Trade delays** are derived from Solana block timestamps, which have ~400ms slot resolution. Detected delays may differ slightly from the actual configured `trade_delay_min_ms` / `trade_delay_max_ms`.
-- **Buy probability** and **sell percentages** are computed from observed trades and may vary from configured values due to randomness in each run.
-- **Single-token analysis** — when analyzing a single run of a token, `creator_min_buy_amount` and `creator_max_buy_amount` will be identical (one data point). Analyze multiple tokens from the same operator to estimate the actual range.
+- **The creator** is identified purely as the signer of the first in-window transaction.
+- **SOL amounts** are the signer's net balance change, so they include network fees, ATA rent, and pump.fun fees — buy/sell sizes therefore read slightly higher than the raw trade amount.
+- **Inter-trade delays** are derived from Solana block timestamps, which have one-second resolution — every `delays_ms` value is a multiple of 1000.
+- **The 15-minute window** is fixed (a constant in `analysis.rs`).
+- A transaction in which the signer's token balance does not change is classified `Unknown` and is excluded from the highlights and stats.
 
 ## Example
 
-Analyzing a token deployed by `hades-spider-bot` with Strategy 3:
+Running the tool against a single token:
 
 ```
 $ cargo run --release
 
 ════════════════════════════════════════════════════════════════
-  Analyzing token 1/1: 7j6VDtVG8FuP2bmzeZuZCFfz8sordp4mUqYDgnMgetcg
+  Analyzing token 1/1: J6gefFyTPhWWRdu2LhMy8PFmAuCftgTJ5pbMym36pump
 ════════════════════════════════════════════════════════════════
 
 ┌─────────────────────────────────────────────────────────────
-│ curds (CURD) — Analysis Complete
+│ low cap coin (lowcap) — Analysis Complete
 ├─────────────────────────────────────────────────────────────
-│ Mint:              7j6VDtVG8FuP2bmzeZuZCFfz8sordp4mUqYDgnMgetcg
-│ Transactions:      72 total (70 bot, 2 external)
-│ Primary wallet:    spiderhuf1WwQRuypqCyjora73MqKuff45JFxaU5yC1
-│ Creator:           BvC4PxpGpWbH9Ww9YGb7mVswzX97RKtdSmwuFEcxQkUp
-│ Creator buy:       0.1987 SOL
-│ Initial buyers:    1 (total 0.9070 SOL)
-│ Staggered buyers:  10 (41 buys, 24 sells, 4.4247 SOL bought)
-│ External wallets:  1 (1 buys = 0.0031 SOL)
+│ Mint:              J6gefFyTPhWWRdu2LhMy8PFmAuCftgTJ5pbMym36pump
+│ Creator:           Gt4bHbddGatddFcGnGL9hRCZcnx4LYBBmYbz4QatK5Cw
+│ Creator txs:       2
 ├─────────────────────────────────────────────────────────────
-│ ASSUMED CONFIG (Strategy 3)
-│ Initial buyers + staggered buyers with sells → Strategy 3
+│ HIGHLIGHTS
+│ Total trades:      626 (420 buys, 206 sells)
+│ Unique wallets:    349
+│ Most active:       BcvQbvzbcecD1q2i9Ras3sM5JXYXz4z1ZnkHg9DqFoo1 (13 trades)
+│ Buy volume:        246.2434 SOL
+│ Sell volume:       97.8452 SOL
+│ Net inflow:        +148.3982 SOL
+│ Top buy:           26.0021 SOL (DCy31D51Uy9xo3HaToYVfuakHd7e5jbHH3oVCSxDRmFu)
+│ Top sell:          3.6357 SOL (9muvqhKeDuHNBDP5hrLmDZSwhzgHbd9nUsgaPv8qL42v)
+├─────────────────────────────────────────────────────────────
+│ TRADE STATS
+│ Buy probability:   0.6709
+│ Sell probability:  0.3291
 │
-│ creator_fund_sol           = 0.0313
-│ creator_min_buy_amount     = 0.1987
-│ creator_max_buy_amount     = 0.1987
-│ initial_buyer_count        = 1
-│ initial_buyer_min_buy_amount = 0.9070
-│ initial_buyer_max_buy_amount = 0.9070
-│ buyer_count                = 10
-│ buyer_fund_sol             = 0.5000
-│ buy_amount_min_sol         = 0.0509
-│ buy_amount_max_sol         = 0.1535
-│ trade_delay_min_ms         = 2000
-│ trade_delay_max_ms         = 9000
-│ buy_probability            = 0.63
-│ sell_pct_min               = 0.53
-│ sell_pct_max               = 1.00
+│ Buy SOL:    min 0.0000  p25 0.1215  avg 0.5863  p75 0.5756  max 26.0021
+│ Sell SOL:   min 0.0000  p25 0.0633  avg 0.4750  p75 0.6344  max 3.6357
+│ Delays ms:  min 0  p25 0  avg 1440  p75 2000  max 8000
+│ Sell %:     min 0.0300  p25 0.2500  avg 0.6670  p75 1.0000  max 1.0000
 └─────────────────────────────────────────────────────────────
 ```
 
+The full structured report is written to `results/J6gefFyTPhWWRdu2LhMy8PFmAuCftgTJ5pbMym36pump.json`.
+
+## Project structure
+
+```
+src/
+  main.rs       entry point: .env loading, per-token orchestration, console summary
+  lib.rs        module declarations
+  rpc.rs        Solana JSON-RPC client + pump.fun metadata API
+  types.rs      all data structures — RPC responses, parsed trades, the JSON report
+  analysis.rs   analysis engine: signature fetch, transaction parsing, classification, stats
+```
+
+## Disclaimer
+
+**This software is provided for educational and informational purposes only.**
+
+- **Not financial advice.** Nothing in this repository — code, comments, documentation, output, or examples — constitutes financial, investment, trading, legal, or tax advice. It is a technical demonstration of on-chain data analysis.
+- **Read-only tool.** This software only reads public on-chain and API data. It holds no wallet, no private keys, and no funds, and it never signs or submits a transaction — it cannot place trades or move assets.
+- **Analysis is heuristic.** The bot classifies and aggregates transactions with best-effort heuristics. Its output is an estimate derived from public data, may be incomplete or incorrect, and must not be relied upon as fact.
+- **No warranty.** This software is provided "AS IS", without warranty of any kind, express or implied. It may contain bugs, may misclassify transactions, and may produce inaccurate results — including through software defects, RPC or API failures, or rate limiting.
+- **No liability.** To the maximum extent permitted by law, the author(s) and contributors shall not be liable for any claim, damages, or other liability arising from or in connection with the use of, or inability to use, this software, or any decision made on the basis of its output.
+- **You are solely responsible** for how you use this software and its output, and for complying with all laws, regulations, and third-party terms of service (including those of pump.fun and your RPC provider) applicable in your jurisdiction.
+
+By using, running, modifying, or distributing this software, you acknowledge that you have read and understood this disclaimer and accept full responsibility for the outcomes.
+
 ## Author
 
-Taki Hades Baker Alyasri
+**Taki Hades Baker Alyasri**
 
 ## License
 
-MIT
+MIT — see the [Disclaimer](#disclaimer) above. The MIT license's "AS IS", no-warranty, and no-liability terms apply to all use of this software.
